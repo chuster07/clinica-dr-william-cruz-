@@ -104,22 +104,28 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="w-full px-4 md:px-0"
+              className="w-full flex justify-center items-center mt-8 md:mt-0"
             >
-              <div className="relative max-w-md mx-auto md:max-w-none">
+              <div className="relative w-full max-w-sm md:max-w-md lg:max-w-lg">
+                {/* Fondo decorativo */}
                 <div className="absolute inset-0 bg-white/10 rounded-2xl md:rounded-3xl transform rotate-3 md:rotate-6"></div>
+                
+                {/* Imagen del doctor */}
                 <img 
                   src="/doctor.png" 
                   alt="Dr. William Cruz" 
-                  className="relative rounded-2xl md:rounded-3xl shadow-2xl w-full h-80 sm:h-96 object-cover object-center"
+                  className="relative rounded-2xl md:rounded-3xl shadow-2xl w-full h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain md:object-cover"
                   loading="eager"
+                  style={{ objectPosition: 'center center' }}
                 />
-                <div className="absolute bottom-4 right-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-3 md:p-4 rounded-xl shadow-2xl">
+                
+                {/* Badge de experiencia */}
+                <div className="absolute -bottom-4 -right-2 sm:bottom-4 sm:right-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-3 md:p-4 rounded-xl shadow-2xl">
                   <div className="flex items-center space-x-2 md:space-x-3">
-                    <Award className="w-6 h-6 md:w-8 md:h-8 text-yellow-500" />
+                    <Award className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-500" />
                     <div>
-                      <p className="font-bold text-sm md:text-lg">+15 Años</p>
-                      <p className="text-xs md:text-sm text-gray-600">de Experiencia</p>
+                      <p className="font-bold text-xs sm:text-sm md:text-lg">+15 Años</p>
+                      <p className="text-[10px] sm:text-xs md:text-sm text-gray-600">de Experiencia</p>
                     </div>
                   </div>
                 </div>
