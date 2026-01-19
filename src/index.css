@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    min-height: 100vh;
+  }
+  
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #06b6d4 #1e293b;
+  }
+}
+
+/* Utility classes personalizadas */
+.btn-primary {
+  background: linear-gradient(135deg, #2c7873 0%, #246661 100%);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(44, 120, 115, 0.4);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #246661 0%, #1e5450 100%);
+  box-shadow: 0 6px 30px rgba(44, 120, 115, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6fb98f 0%, #4ade80 100%);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(111, 185, 143, 0.4);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #4ade80 0%, #3cb371 100%);
+  box-shadow: 0 6px 30px rgba(111, 185, 143, 0.6);
+  transform: translateY(-2px);
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid rgba(44, 120, 115, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(44, 120, 115, 0.15);
+  padding: 1.5rem;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+.card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(44, 120, 115, 0.3);
+  transform: translateY(-4px);
+  border-color: rgba(44, 120, 115, 0.5);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(44, 120, 115, 0.3);
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+  color: #e2e8f0;
+  backdrop-filter: blur(10px);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #2c7873;
+  box-shadow: 0 0 0 3px rgba(44, 120, 115, 0.2), 0 0 20px rgba(44, 120, 115, 0.3);
+  background: rgba(30, 41, 59, 0.95);
+}
+
+.input-field::placeholder {
+  color: #94a3b8;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #2c7873 0%, #246661 100%);
+  border-radius: 10px;
+  border: 2px solid #1e293b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6fb98f 0%, #2c7873 100%);
+  box-shadow: 0 0 10px rgba(44, 120, 115, 0.5);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:focus,
+.sr-only:active {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
