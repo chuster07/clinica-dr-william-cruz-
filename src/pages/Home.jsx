@@ -68,7 +68,7 @@ const Home = () => {
       <section className="relative bg-gradient-to-br from-teal-700 via-teal-600 to-emerald-500 text-white py-20 overflow-hidden" style={{background: 'linear-gradient(135deg, #2c7873 0%, #6fb98f 50%, #4ade80 100%)'}}>>
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -101,19 +101,20 @@ const Home = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-8 md:mt-0"
+              className="w-full px-4 md:px-0"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-white/10 rounded-3xl transform rotate-6"></div>
+              <div className="relative max-w-md mx-auto md:max-w-none">
+                <div className="absolute inset-0 bg-white/10 rounded-2xl md:rounded-3xl transform rotate-3 md:rotate-6"></div>
                 <img 
                   src="/doctor.png" 
                   alt="Dr. William Cruz" 
-                  className="relative rounded-3xl shadow-2xl w-full h-64 md:h-96 object-cover"
+                  className="relative rounded-2xl md:rounded-3xl shadow-2xl w-full h-80 sm:h-96 object-cover object-center"
+                  loading="eager"
                 />
-                <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-3 md:p-4 rounded-xl shadow-2xl">
+                <div className="absolute bottom-4 right-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-3 md:p-4 rounded-xl shadow-2xl">
                   <div className="flex items-center space-x-2 md:space-x-3">
                     <Award className="w-6 h-6 md:w-8 md:h-8 text-yellow-500" />
                     <div>
