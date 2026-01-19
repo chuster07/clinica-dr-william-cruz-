@@ -104,21 +104,21 @@ const Home = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="hidden md:block"
+              className="mt-8 md:mt-0"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-white/10 rounded-3xl transform rotate-6"></div>
                 <img 
                   src="/doctor.png" 
                   alt="Dr. William Cruz" 
-                  className="relative rounded-3xl shadow-2xl w-full h-96 object-cover"
+                  className="relative rounded-3xl shadow-2xl w-full h-64 md:h-96 object-cover"
                 />
-                <div className="absolute -bottom-6 -right-6 bg-white text-gray-900 p-4 rounded-xl shadow-2xl">
-                  <div className="flex items-center space-x-3">
-                    <Award className="w-8 h-8 text-yellow-500" />
+                <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-3 md:p-4 rounded-xl shadow-2xl">
+                  <div className="flex items-center space-x-2 md:space-x-3">
+                    <Award className="w-6 h-6 md:w-8 md:h-8 text-yellow-500" />
                     <div>
-                      <p className="font-bold text-lg">+15 Años</p>
-                      <p className="text-sm text-gray-600">de Experiencia</p>
+                      <p className="font-bold text-sm md:text-lg">+15 Años</p>
+                      <p className="text-xs md:text-sm text-gray-600">de Experiencia</p>
                     </div>
                   </div>
                 </div>
