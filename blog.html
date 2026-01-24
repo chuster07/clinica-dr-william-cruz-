@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Blog del Dr. William Cruz Umaña - Artículos sobre medicina integrativa, macrobiótica, salud holística y bienestar natural.">
+    <meta name="keywords"
+        content="blog medicina integrativa, macrobiótica, salud holística, Dr. William Cruz, bienestar natural">
+    <title>Blog | Dr. William Cruz Umaña - Medicina Integrativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        .blog-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            color: var(--text-inverse);
+            padding: 10rem 0 6rem;
+            text-align: center;
+        }
+
+        .blog-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 3.8rem);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blog-section {
+            padding: 5rem 0;
+            background-color: var(--bg-main);
+        }
+
+        .blog-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .blog-main {
+            background-color: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .blog-sidebar {
+            display: grid;
+            gap: 2rem;
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            background-color: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .blog-post {
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .blog-post-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .blog-post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .blog-post-meta i {
+            color: var(--color-primary);
+        }
+
+        .blog-post-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .blog-post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .blog-post-tags {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-tag {
+            background-color: rgba(0, 105, 92, 0.1);
+            color: var(--color-primary);
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .blog-tag:hover {
+            background-color: var(--color-primary);
+            color: var(--text-inverse);
+        }
+
+        .read-more {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+            color: var(--color-primary-light);
+        }
+
+        .sidebar-section h3 {
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 800;
+            border-left: 4px solid var(--color-accent);
+            padding-left: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            outline: none;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--color-primary);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .category-list a {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .category-list a:hover {
+            color: var(--color-primary);
+            padding-left: 0.5rem;
+        }
+
+        .recent-posts {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .recent-post {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+        }
+
+        .recent-post-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .recent-post-content h4 {
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .recent-post-content p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .pagination a {
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .pagination a.active {
+            background-color: var(--color-primary);
+            color: var(--text-inverse);
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .featured-post-widget {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: var(--text-inverse);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .author-box-widget {
+            background-color: rgba(0, 105, 92, 0.05);
+            border: 1px solid rgba(0, 105, 92, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    @media (max-width: 768px) {
+    .blog-container {
+    grid-template-columns: 1fr;
+    }
+
+    .blog-hero h1 {
+    font-size: 2rem;
+    }
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-stethoscope"></i> Dr. William Cruz Umaña
+                </div>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="index.html#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                    <li><a href="index.html#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="index.html#testimonios" class="nav-link">Testimonios</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                    <li><a href="citas.html" class="nav-link">Citas</a></li>
+                    <li><a href="index.html#contacto" class="nav-link">Contacto</a></li>
+                    <li><a href="tel:+50627703198" class="nav-link phone"><i class="fas fa-phone"></i>
+                            <span>2770-3198</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sección Hero del Blog -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Blog de Medicina Integrativa</h1>
+            <p>Artículos sobre salud holística, macrobiótica y bienestar natural</p>
+        </div>
+    </section>
+
+    <!-- Sección Principal del Blog -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-container">
+                <!-- Contenido Principal -->
+                <div class="blog-main">
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                            alt="Medicina Integrativa" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 15 de Enero, 2025</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Medicina Integrativa</span>
+                        </div>
+                        <h2 class="blog-post-title">Los Beneficios de la Medicina Integrativa en el Siglo XXI</h2>
+                        <p class="blog-post-excerpt">
+                            La medicina integrativa representa un enfoque revolucionario que combina lo mejor de la
+                            medicina convencional con terapias complementarias. En este artículo exploramos cómo esta
+                            aproximación holística puede transformar su salud y bienestar...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Medicina Integrativa</a>
+                            <a href="#" class="blog-tag">Salud Holística</a>
+                            <a href="#" class="blog-tag">Bienestar</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                            alt="Nutrición Macrobiótica" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 10 de Enero, 2025</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Nutrición</span>
+                        </div>
+                        <h2 class="blog-post-title">Principios Básicos de la Nutrición Macrobiótica</h2>
+                        <p class="blog-post-excerpt">
+                            La macrobiótica no es solo una dieta, es una filosofía de vida que busca el equilibrio a
+                            través de la alimentación. Descubra los principios fundamentales y cómo aplicarlos en su
+                            vida diaria para mejorar su salud...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Macrobiótica</a>
+                            <a href="#" class="blog-tag">Nutrición</a>
+                            <a href="#" class="blog-tag">Alimentación Saludable</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                            alt="Plantas Medicinales" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 5 de Enero, 2025</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Fitoterapia</span>
+                        </div>
+                        <h2 class="blog-post-title">Plantas Medicinales: El Poder Curativo de la Naturaleza</h2>
+                        <p class="blog-post-excerpt">
+                            Desde tiempos ancestrales, las plantas han sido nuestros aliados en el camino hacia la
+                            salud. Conozca las propiedades curativas de las plantas medicinales más efectivas y cómo
+                            utilizarlas de forma segura...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Fitoterapia</a>
+                            <a href="#" class="blog-tag">Plantas Medicinales</a>
+                            <a href="#" class="blog-tag">Medicina Natural</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                            alt="Manejo del Estrés" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 1 de Enero, 2025</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Bienestar Mental</span>
+                        </div>
+                        <h2 class="blog-post-title">Técnicas Naturales para el Manejo del Estrés</h2>
+                        <p class="blog-post-excerpt">
+                            En nuestro mundo moderno, el estrés se ha convertido en una epidemia silenciosa. Aprenda
+                            técnicas naturales y efectivas para manejar el estrés y recuperar su equilibrio mental y
+                            emocional...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Estrés</a>
+                            <a href="#" class="blog-tag">Bienestar Mental</a>
+                            <a href="#" class="blog-tag">Meditación</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Microbiota Intestinal" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 28 de Diciembre, 2024</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Digestivo</span>
+                        </div>
+                        <h2 class="blog-post-title">Microbiota Intestinal: Clave para la Inmunidad y el Metabolismo</h2>
+                        <p class="blog-post-excerpt">
+                            La ciencia confirma que un intestino sano impacta positivamente el sistema inmune, el estado
+                            de ánimo y el peso corporal. Comparto estrategias basadas en evidencia para nutrir su
+                            microbiota con alimentos y hábitos cotidianos...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Microbiota</a>
+                            <a href="#" class="blog-tag">Probióticos</a>
+                            <a href="#" class="blog-tag">Digestión</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Detox Suave" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 20 de Diciembre, 2024</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Desintoxicación</span>
+                        </div>
+                        <h2 class="blog-post-title">Desintoxicación Suave: 7 Pasos Seguros para Empezar</h2>
+                        <p class="blog-post-excerpt">
+                            No todo “detox” es extremo. Explico un protocolo seguro y práctico basado en nutrición,
+                            hidratación, descanso y apoyo hepático para mejorar energía y claridad mental sin riesgos...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Detox</a>
+                            <a href="#" class="blog-tag">Hígado</a>
+                            <a href="#" class="blog-tag">Bienestar</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="blog-post">
+                        <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                            alt="Sueño Reparador" class="blog-post-image">
+                        <div class="blog-post-meta">
+                            <span><i class="fas fa-calendar"></i> 12 de Diciembre, 2024</span>
+                            <span><i class="fas fa-user"></i> Dr. William Cruz</span>
+                            <span><i class="fas fa-folder"></i> Sueño</span>
+                        </div>
+                        <h2 class="blog-post-title">Guía de Sueño Reparador: Ritmos, Nutrientes y Rutinas</h2>
+                        <p class="blog-post-excerpt">
+                            Dormir bien es medicina. Comparto rutinas de higiene del sueño, micronutrientes clave y
+                            técnicas mente‑cuerpo para mejorar la calidad del descanso y apoyar la recuperación...
+                        </p>
+                        <div class="blog-post-tags">
+                            <a href="#" class="blog-tag">Sueño</a>
+                            <a href="#" class="blog-tag">Melatonina</a>
+                            <a href="#" class="blog-tag">Ritmos circadianos</a>
+                        </div>
+                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <!-- Paginación -->
+                    <div class="pagination">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="blog-sidebar">
+                    <!-- Post destacado -->
+                    <div class="sidebar-widget featured-post-widget">
+                        <h3>Post Destacado</h3>
+                        <p>Cómo empezar con la Medicina Integrativa: pasos prácticos para su primera consulta.</p>
+                        <a href="#" class="btn btn-secondary">Leer ahora</a>
+                    </div>
+                    <!-- Búsqueda -->
+                    <div class="sidebar-widget">
+                        <h3>Buscar Artículos</h3>
+                        <div class="search-box">
+                            <input type="text" placeholder="Buscar en el blog...">
+                            <button type="button"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Categorías -->
+                    <div class="sidebar-widget">
+                        <h3>Categorías</h3>
+                        <ul class="category-list">
+                            <li><a href="#">Medicina Integrativa <span>(12)</span></a></li>
+                            <li><a href="#">Nutrición Macrobiótica <span>(8)</span></a></li>
+                            <li><a href="#">Fitoterapia <span>(15)</span></a></li>
+                            <li><a href="#">Bienestar Mental <span>(6)</span></a></li>
+                            <li><a href="#">Desintoxicación <span>(4)</span></a></li>
+                            <li><a href="#">Productos Naturales <span>(10)</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Autor -->
+                    <div class="sidebar-widget author-box-widget">
+                        <div class="author-box" style="background:none;padding:0">
+                            <div class="author-avatar">
+                                <img src="https://images.unsplash.com/photo-1531123414780-f74241a7f2e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+                                    alt="Dr. William Cruz" />
+                            </div>
+                            <div>
+                                <h3>Dr. William Cruz</h3>
+                                <p>Médico en Medicina Integrativa con enfoque holístico.</p>
+                                <a class="btn btn-outline btn-sm" href="index.html#sobre-mi"
+                                    style="margin-top:.5rem">Ver biografía</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Artículos Recientes -->
+                    <div class="sidebar-widget">
+                        <h3>Artículos Recientes</h3>
+                        <ul class="recent-posts">
+                            <li class="recent-post">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                                    alt="Artículo" class="recent-post-image">
+                                <div class="recent-post-content">
+                                    <h4>Los Beneficios de la Medicina Integrativa</h4>
+                                    <p>15 de Enero, 2025</p>
+                                </div>
+                            </li>
+                            <li class="recent-post">
+                                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                                    alt="Artículo" class="recent-post-image">
+                                <div class="recent-post-content">
+                                    <h4>Nutrición Macrobiótica</h4>
+                                    <p>10 de Enero, 2025</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Suscripción -->
+                    <div class="sidebar-widget">
+                        <h3>Boletín de Salud</h3>
+                        <p>Consejos exclusivos en su bandeja de entrada.</p>
+                        <div class="newsletter-box" style="margin-top:1rem">
+                            <input type="email" placeholder="Su email" />
+                            <a href="#" class="btn btn-primary" style="width:100%">Suscribirme</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5 py-3 bg-light">
+        <p>&copy; 2025 Dr. William Cruz Umaña - Clínica Hahnemann y Macrobiótica Salud PZ. Todos los derechos
+            reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
