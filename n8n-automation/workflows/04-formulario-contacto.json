@@ -11,7 +11,10 @@
       "name": "Webhook - Formulario Contacto",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [250, 300]
+      "position": [
+        250,
+        300
+      ]
     },
     {
       "parameters": {
@@ -54,7 +57,10 @@
       "name": "Formatear Datos",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ]
     },
     {
       "parameters": {
@@ -86,7 +92,11 @@
       "name": "Guardar en Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
-      "position": [650, 200]
+      "position": [
+        650,
+        200
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -99,7 +109,11 @@
       "name": "Email Auto-respuesta",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -113,7 +127,11 @@
       "name": "Telegram - Notificar Equipo",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1,
-      "position": [650, 400]
+      "position": [
+        650,
+        400
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -124,22 +142,55 @@
       "name": "Responder al Cliente",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [850, 300]
+      "position": [
+        850,
+        300
+      ]
     }
   ],
   "connections": {
     "Webhook - Formulario Contacto": {
-      "main": [[{"node": "Formatear Datos", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Formatear Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Formatear Datos": {
-      "main": [[
-        {"node": "Guardar en Google Sheets", "type": "main", "index": 0},
-        {"node": "Email Auto-respuesta", "type": "main", "index": 0},
-        {"node": "Telegram - Notificar Equipo", "type": "main", "index": 0}
-      ]]
+      "main": [
+        [
+          {
+            "node": "Guardar en Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Email Auto-respuesta",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram - Notificar Equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Email Auto-respuesta": {
-      "main": [[{"node": "Responder al Cliente", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Responder al Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   }
 }

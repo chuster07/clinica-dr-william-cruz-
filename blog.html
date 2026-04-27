@@ -298,17 +298,15 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
 
-    @media (max-width: 768px) {
-    .blog-container {
-    grid-template-columns: 1fr;
-    }
-
-    .blog-hero h1 {
-    font-size: 2rem;
-    }
-    }
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 
@@ -354,8 +352,8 @@
         <div class="container">
             <div class="blog-container">
                 <!-- Contenido Principal -->
-                <div class="blog-main">
-                    <article class="blog-post">
+                <div class="blog-main" id="blog-main">
+                    <article class="blog-post" id="post-1">
                         <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
                             alt="Medicina Integrativa" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -370,14 +368,14 @@
                             aproximación holística puede transformar su salud y bienestar...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Medicina Integrativa</a>
-                            <a href="#" class="blog-tag">Salud Holística</a>
-                            <a href="#" class="blog-tag">Bienestar</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Medicina Integrativa</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Salud Holística</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Bienestar</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-1" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
-                    <article class="blog-post">
+                    <article class="blog-post" id="post-2">
                         <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
                             alt="Nutrición Macrobiótica" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -392,14 +390,14 @@
                             vida diaria para mejorar su salud...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Macrobiótica</a>
-                            <a href="#" class="blog-tag">Nutrición</a>
-                            <a href="#" class="blog-tag">Alimentación Saludable</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Macrobiótica</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Nutrición</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Alimentación Saludable</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-2" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
-                    <article class="blog-post">
+                    <article class="blog-post" id="post-3">
                         <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
                             alt="Plantas Medicinales" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -414,14 +412,14 @@
                             utilizarlas de forma segura...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Fitoterapia</a>
-                            <a href="#" class="blog-tag">Plantas Medicinales</a>
-                            <a href="#" class="blog-tag">Medicina Natural</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Fitoterapia</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Plantas Medicinales</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Medicina Natural</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-3" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
-                    <article class="blog-post">
+                    <article class="blog-post" id="post-4">
                         <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
                             alt="Manejo del Estrés" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -436,14 +434,14 @@
                             emocional...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Estrés</a>
-                            <a href="#" class="blog-tag">Bienestar Mental</a>
-                            <a href="#" class="blog-tag">Meditación</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Estrés</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Bienestar Mental</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Meditación</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-4" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
-                    <article class="blog-post">
+                    <article class="blog-post" id="post-5">
                         <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                             alt="Microbiota Intestinal" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -458,14 +456,14 @@
                             microbiota con alimentos y hábitos cotidianos...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Microbiota</a>
-                            <a href="#" class="blog-tag">Probióticos</a>
-                            <a href="#" class="blog-tag">Digestión</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Microbiota</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Probióticos</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Digestión</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-5" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
-                    <article class="blog-post">
+                    <article class="blog-post" id="post-6">
                         <img src="https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                             alt="Detox Suave" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -479,14 +477,14 @@
                             hidratación, descanso y apoyo hepático para mejorar energía y claridad mental sin riesgos...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Detox</a>
-                            <a href="#" class="blog-tag">Hígado</a>
-                            <a href="#" class="blog-tag">Bienestar</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Detox</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Hígado</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Bienestar</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-6" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
-                    <article class="blog-post">
+                    <article class="blog-post" id="post-7">
                         <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                             alt="Sueño Reparador" class="blog-post-image">
                         <div class="blog-post-meta">
@@ -500,19 +498,19 @@
                             técnicas mente‑cuerpo para mejorar la calidad del descanso y apoyar la recuperación...
                         </p>
                         <div class="blog-post-tags">
-                            <a href="#" class="blog-tag">Sueño</a>
-                            <a href="#" class="blog-tag">Melatonina</a>
-                            <a href="#" class="blog-tag">Ritmos circadianos</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Sueño</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Melatonina</a>
+                            <a href="blog.html#blog-main" class="blog-tag">Ritmos circadianos</a>
                         </div>
-                        <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="blog.html#post-7" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <!-- Paginación -->
                     <div class="pagination">
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#"><i class="fas fa-chevron-right"></i></a>
+                        <a href="blog.html" class="active">1</a>
+                        <a href="blog.html#blog-main">2</a>
+                        <a href="blog.html#blog-main">3</a>
+                        <a href="blog.html#blog-main"><i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
 
@@ -522,7 +520,7 @@
                     <div class="sidebar-widget featured-post-widget">
                         <h3>Post Destacado</h3>
                         <p>Cómo empezar con la Medicina Integrativa: pasos prácticos para su primera consulta.</p>
-                        <a href="#" class="btn btn-secondary">Leer ahora</a>
+                        <a href="blog.html#post-1" class="btn btn-secondary">Leer ahora</a>
                     </div>
                     <!-- Búsqueda -->
                     <div class="sidebar-widget">
@@ -537,12 +535,12 @@
                     <div class="sidebar-widget">
                         <h3>Categorías</h3>
                         <ul class="category-list">
-                            <li><a href="#">Medicina Integrativa <span>(12)</span></a></li>
-                            <li><a href="#">Nutrición Macrobiótica <span>(8)</span></a></li>
-                            <li><a href="#">Fitoterapia <span>(15)</span></a></li>
-                            <li><a href="#">Bienestar Mental <span>(6)</span></a></li>
-                            <li><a href="#">Desintoxicación <span>(4)</span></a></li>
-                            <li><a href="#">Productos Naturales <span>(10)</span></a></li>
+                            <li><a href="blog.html#blog-main">Medicina Integrativa <span>(12)</span></a></li>
+                            <li><a href="blog.html#blog-main">Nutrición Macrobiótica <span>(8)</span></a></li>
+                            <li><a href="blog.html#blog-main">Fitoterapia <span>(15)</span></a></li>
+                            <li><a href="blog.html#blog-main">Bienestar Mental <span>(6)</span></a></li>
+                            <li><a href="blog.html#blog-main">Desintoxicación <span>(4)</span></a></li>
+                            <li><a href="blog.html#blog-main">Productos Naturales <span>(10)</span></a></li>
                         </ul>
                     </div>
 
@@ -591,7 +589,7 @@
                         <p>Consejos exclusivos en su bandeja de entrada.</p>
                         <div class="newsletter-box" style="margin-top:1rem">
                             <input type="email" placeholder="Su email" />
-                            <a href="#" class="btn btn-primary" style="width:100%">Suscribirme</a>
+                            <a href="index.html#contacto" class="btn btn-primary" style="width:100%">Suscribirme</a>
                         </div>
                     </div>
                 </div>

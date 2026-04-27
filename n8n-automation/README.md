@@ -109,6 +109,22 @@ docker ps
 
 **Acceder a N8N:** http://localhost:5678
 
+#### 🔐 Configuración mínima obligatoria en `.env`
+
+Asegúrate de definir al menos estas variables antes de activar workflows:
+
+```env
+N8N_BASIC_AUTH_USER=admin
+N8N_BASIC_AUTH_PASSWORD=<password-seguro>
+N8N_ENCRYPTION_KEY=<clave-segura-32+>
+EVOLUTION_API_KEY=<api-key-segura>
+GOOGLE_SHEET_ID=<id-hoja-google>
+TELEGRAM_BOT_TOKEN=<token-bot>
+TELEGRAM_CHAT_ID=<chat-id>
+```
+
+> El endpoint de citas quedó estandarizado como **`/api/citas`** (en n8n se expone como `.../webhook/api/citas`).
+
 ---
 
 ### 2️⃣ Verificar Instalación

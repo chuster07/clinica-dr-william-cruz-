@@ -4,7 +4,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "citas",
+        "path": "api/citas",
         "responseMode": "responseNode",
         "options": {}
       },
@@ -12,7 +12,10 @@
       "name": "Webhook - Recibir Cita",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [250, 300],
+      "position": [
+        250,
+        300
+      ],
       "webhookId": "citas-clinica"
     },
     {
@@ -66,7 +69,10 @@
       "name": "Formatear Datos",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ]
     },
     {
       "parameters": {
@@ -107,13 +113,17 @@
       "name": "Guardar en Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
-      "position": [650, 200],
+      "position": [
+        650,
+        200
+      ],
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "1",
           "name": "Google Sheets OAuth2"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -125,24 +135,28 @@
           "cachedResultName": "primary"
         },
         "start": "={{ $json.fecha + 'T' + $json.hora + ':00' }}",
-        "end": "={{ $now.plus({hours: 1}).format('yyyy-MM-ddTHH:mm:ss') }}",
         "title": "={{ '🏥 Cita: ' + $json.nombre + ' ' + $json.apellido }}",
         "description": "=Servicio: {{ $json.servicio }}\nTeléfono: {{ $json.telefono }}\nEmail: {{ $json.email }}\n\nNotas: {{ $json.mensaje }}",
         "options": {
           "sendUpdates": "all"
-        }
+        },
+        "duration": 60
       },
       "id": "google-calendar-create",
       "name": "Crear Evento en Calendar",
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1,
-      "position": [650, 300],
+      "position": [
+        650,
+        300
+      ],
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "1",
           "name": "Google Calendar OAuth2"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -169,13 +183,17 @@
       "name": "WhatsApp - Confirmación",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [650, 400],
+      "position": [
+        650,
+        400
+      ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "2",
           "name": "Evolution API"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -192,13 +210,17 @@
       "name": "Gmail - Confirmación",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
-      "position": [650, 500],
+      "position": [
+        650,
+        500
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "3",
           "name": "Gmail OAuth2"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -213,13 +235,17 @@
       "name": "Telegram - Notificar Equipo",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1,
-      "position": [650, 600],
+      "position": [
+        650,
+        600
+      ],
       "credentials": {
         "telegramApi": {
           "id": "4",
           "name": "Telegram Bot Clinica"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -231,7 +257,10 @@
       "name": "Responder al Cliente",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [850, 300]
+      "position": [
+        850,
+        300
+      ]
     }
   ],
   "connections": {

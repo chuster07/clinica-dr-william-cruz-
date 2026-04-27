@@ -254,23 +254,11 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
-    </style>
-
-    @media screen and (min-width: 768px) {
-    .appointment-container {
-    grid-template-columns: 1fr 1fr;
-    }
-
-    .form-row {
-    grid-template-columns: 1fr 1fr;
-    }
-    }
-
-    @media screen and (min-width: 992px) {
-    .appointment-hero h1 {
-    font-size: 3.5rem;
-    }
-    }
+        @media screen and (min-width: 992px) {
+            .appointment-hero h1 {
+                font-size: 3.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -402,7 +390,7 @@
                             <label class="checkbox-label">
                                 <input type="checkbox" id="privacy" name="privacy" required>
                                 <span class="checkmark"></span>
-                                Acepto la <a href="#" target="_blank">política de privacidad</a> y el tratamiento de mis
+                                Acepto la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a> y el tratamiento de mis
                                 datos personales *
                             </label>
                         </div>
@@ -484,10 +472,10 @@
                     <div class="logo"><i class="fas fa-stethoscope"></i> Dr. William Cruz Umaña</div>
                     <p>Clínica Hahnemann y Macrobiótica Salud PZ - Medicina integrativa para su bienestar y salud.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/50627703198" class="social-icon" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="mailto:clinica@drwilliamcruz.com" class="social-icon" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="tel:+50627703198" class="social-icon" aria-label="Teléfono"><i class="fas fa-phone"></i></a>
+                        <a href="index.html#contacto" class="social-icon" aria-label="Contacto"><i class="fas fa-map-marker-alt"></i></a>
                     </div>
                 </div>
             </div>
@@ -503,7 +491,7 @@
     <script src="script.js"></script>
     <script>
         // Integración con N8N - Formulario de citas
-        const N8N_CITAS_URL = 'https://c19-ef2.aiagent777.co/webhook/citas';
+        const N8N_CITAS_URL = '/api/citas';
 
         document.getElementById('appointmentForm').addEventListener('submit', async function (e) {
             e.preventDefault();

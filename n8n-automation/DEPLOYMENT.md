@@ -170,7 +170,7 @@ CNAME   www       tudominio.com
 
 #### **En `citas.html`:**
 ```javascript
-const N8N_CITAS_URL = 'https://n8n.tudominio.com/webhook/citas';
+const N8N_CITAS_URL = '/api/citas';
 ```
 
 #### **En `script.js`:**

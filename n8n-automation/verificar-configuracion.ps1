@@ -72,7 +72,7 @@ try {
     # Verificar contenedores
     $containers = docker ps --format "{{.Names}}" 2>$null
     
-    $contenedoresEsperados = @("n8n", "evolution-api", "postgres")
+    $contenedoresEsperados = @("n8n_clinica", "evolution_api_clinica", "redis_clinica")
     
     foreach ($contenedor in $contenedoresEsperados) {
         if ($containers -match $contenedor) {
@@ -235,7 +235,7 @@ Write-Host "      - GUIA_VISUAL.md" -ForegroundColor Gray
 Write-Host "      - CHECKLIST.md" -ForegroundColor Gray
 Write-Host ""
 Write-Host "   🆘 Comandos útiles:" -ForegroundColor White
-Write-Host "      Ver logs:      docker logs n8n" -ForegroundColor Gray
+Write-Host "      Ver logs:      docker logs n8n_clinica" -ForegroundColor Gray
 Write-Host "      Reiniciar:     docker-compose restart" -ForegroundColor Gray
 Write-Host "      Detener:       docker-compose down" -ForegroundColor Gray
 Write-Host "      Iniciar:       docker-compose up -d" -ForegroundColor Gray

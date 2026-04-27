@@ -8,7 +8,7 @@
  */
 
 // URL del webhook de N8N (reemplaza con tu URL real)
-const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/citas';
+const N8N_WEBHOOK_URL = '/api/citas';
 
 // Obtener el formulario
 const appointmentForm = document.getElementById('appointmentForm');

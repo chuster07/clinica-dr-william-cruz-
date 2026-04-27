@@ -16,7 +16,10 @@
       "name": "Ejecutar Diario 9 AM",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
-      "position": [250, 300]
+      "position": [
+        250,
+        300
+      ]
     },
     {
       "parameters": {
@@ -42,7 +45,11 @@
       "name": "Obtener Citas Completadas",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -52,7 +59,10 @@
       "name": "Filtrar Seguimientos Pendientes",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ]
     },
     {
       "parameters": {
@@ -62,7 +72,10 @@
       "name": "Formatear Datos",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [850, 300]
+      "position": [
+        850,
+        300
+      ]
     },
     {
       "parameters": {
@@ -89,7 +102,10 @@
       "name": "Tipo de Seguimiento",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3,
-      "position": [1050, 300]
+      "position": [
+        1050,
+        300
+      ]
     },
     {
       "parameters": {
@@ -102,7 +118,11 @@
       "name": "Email - Seguimiento 24h",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
-      "position": [1250, 150]
+      "position": [
+        1250,
+        150
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -115,13 +135,17 @@
       "name": "WhatsApp - Check-in 7 días",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
-      "position": [1250, 300],
+      "position": [
+        1250,
+        300
+      ],
       "credentials": {
         "whatsAppApi": {
           "id": "TU_CREDENCIAL_ID",
           "name": "WhatsApp Clinica"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -134,7 +158,11 @@
       "name": "Email - Reactivación 30 días",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
-      "position": [1250, 450]
+      "position": [
+        1250,
+        450
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -147,37 +175,99 @@
       "name": "WhatsApp - Reactivación 30 días",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
-      "position": [1450, 450],
+      "position": [
+        1450,
+        450
+      ],
       "credentials": {
         "whatsAppApi": {
           "id": "TU_CREDENCIAL_ID",
           "name": "WhatsApp Clinica"
         }
-      }
+      },
+      "continueOnFail": true
     }
   ],
   "connections": {
     "Ejecutar Diario 9 AM": {
-      "main": [[{"node": "Obtener Citas Completadas", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Obtener Citas Completadas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Obtener Citas Completadas": {
-      "main": [[{"node": "Filtrar Seguimientos Pendientes", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Filtrar Seguimientos Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Filtrar Seguimientos Pendientes": {
-      "main": [[{"node": "Formatear Datos", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Formatear Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Formatear Datos": {
-      "main": [[{"node": "Tipo de Seguimiento", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Tipo de Seguimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Tipo de Seguimiento": {
       "main": [
-        [{"node": "Email - Seguimiento 24h", "type": "main", "index": 0}],
-        [{"node": "WhatsApp - Check-in 7 días", "type": "main", "index": 0}],
-        [{"node": "Email - Reactivación 30 días", "type": "main", "index": 0}]
+        [
+          {
+            "node": "Email - Seguimiento 24h",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WhatsApp - Check-in 7 días",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email - Reactivación 30 días",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Email - Reactivación 30 días": {
-      "main": [[{"node": "WhatsApp - Reactivación 30 días", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Reactivación 30 días",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {

@@ -16,7 +16,10 @@
       "name": "Ejecutar cada 6 horas",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
-      "position": [250, 300]
+      "position": [
+        250,
+        300
+      ]
     },
     {
       "parameters": {
@@ -42,7 +45,11 @@
       "name": "Obtener Citas Pendientes",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -52,7 +59,10 @@
       "name": "Filtrar Citas para Recordar",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ]
     },
     {
       "parameters": {
@@ -78,7 +88,11 @@
       "name": "Enviar WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [850, 200]
+      "position": [
+        850,
+        200
+      ],
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -91,18 +105,51 @@
       "name": "Enviar Email",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
-      "position": [850, 300]
+      "position": [
+        850,
+        300
+      ],
+      "continueOnFail": true
     }
   ],
   "connections": {
     "Ejecutar cada 6 horas": {
-      "main": [[{"node": "Obtener Citas Pendientes", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Obtener Citas Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Obtener Citas Pendientes": {
-      "main": [[{"node": "Filtrar Citas para Recordar", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Filtrar Citas para Recordar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Filtrar Citas para Recordar": {
-      "main": [[{"node": "Enviar WhatsApp", "type": "main", "index": 0}, {"node": "Enviar Email", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   }
 }

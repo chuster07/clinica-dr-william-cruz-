@@ -48,6 +48,19 @@
 
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius: 12px;
+
+    /* --- Alias de compatibilidad (normalización) --- */
+    --primary-color: var(--color-primary);
+    --secondary-color: var(--color-secondary);
+    --accent-color: var(--color-accent);
+
+    --white: #ffffff;
+    --text-dark: var(--text-primary);
+    --text-light: var(--text-secondary);
+    --light-gray: #eef2f7;
+    --gray: #cbd5e1;
+    --primary-rgb: 0, 105, 92;
+    --box-shadow: var(--shadow-md);
 }
 
 /* Reset y estilos base */

@@ -129,7 +129,7 @@ Cada workflow necesita:
 
 1. **Webhook - Recibir Cita**
    - [ ] URL del webhook copiada
-   - [ ] Path: `/cita`
+   - [ ] Path: `/api/citas`
    - [ ] Método: POST
 
 2. **Formatear Datos**

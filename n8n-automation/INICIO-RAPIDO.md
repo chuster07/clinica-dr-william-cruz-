@@ -156,7 +156,7 @@ Para cada workflow importado:
 
 #### **A. En `citas.html`** (línea 473)
 ```javascript
-const N8N_CITAS_URL = 'http://localhost:5678/webhook/citas';
+const N8N_CITAS_URL = '/api/citas';
 // Cambia a tu URL pública cuando despliegues
 ```
 

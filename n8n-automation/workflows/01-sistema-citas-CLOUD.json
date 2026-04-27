@@ -1,301 +1,306 @@
 {
-    "name": "01 - Sistema de Citas (WhatsApp Cloud)",
-    "nodes": [
-        {
-            "parameters": {
-                "httpMethod": "POST",
-                "path": "citas",
-                "responseMode": "responseNode",
-                "options": {}
+  "name": "01 - Sistema de Citas (WhatsApp Cloud)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "api/citas",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-citas",
+      "name": "Webhook - Recibir Cita",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "citas-clinica"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "nombre",
+              "name": "nombre",
+              "value": "={{ $json.body.nombre }}",
+              "type": "string"
             },
-            "id": "webhook-citas",
-            "name": "Webhook - Recibir Cita",
-            "type": "n8n-nodes-base.webhook",
-            "typeVersion": 1,
-            "position": [
-                250,
-                300
-            ],
-            "webhookId": "citas-clinica"
-        },
-        {
-            "parameters": {
-                "assignments": {
-                    "assignments": [
-                        {
-                            "id": "nombre",
-                            "name": "nombre",
-                            "value": "={{ $json.body.nombre }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "apellido",
-                            "name": "apellido",
-                            "value": "={{ $json.body.apellido }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "telefono",
-                            "name": "telefono",
-                            "value": "={{ $json.body.telefono }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "email",
-                            "name": "email",
-                            "value": "={{ $json.body.email }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "fecha",
-                            "name": "fecha",
-                            "value": "={{ $json.body.fecha }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "hora",
-                            "name": "hora",
-                            "value": "={{ $json.body.hora }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "servicio",
-                            "name": "servicio",
-                            "value": "={{ $json.body.servicio }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "mensaje",
-                            "name": "mensaje",
-                            "value": "={{ $json.body.mensaje || 'Sin mensaje adicional' }}",
-                            "type": "string"
-                        },
-                        {
-                            "id": "fecha_registro",
-                            "name": "fecha_registro",
-                            "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
-                            "type": "string"
-                        }
-                    ]
-                }
+            {
+              "id": "apellido",
+              "name": "apellido",
+              "value": "={{ $json.body.apellido }}",
+              "type": "string"
             },
-            "id": "set-data",
-            "name": "Formatear Datos",
-            "type": "n8n-nodes-base.set",
-            "typeVersion": 3,
-            "position": [
-                450,
-                300
-            ]
-        },
-        {
-            "parameters": {
-                "jsCode": "// Formatear teléfono para WhatsApp Cloud API\nlet telefono = $json.telefono.toString().replace(/[\\s\\-\\(\\)\\+]/g, '');\nif (!telefono.startsWith('506')) {\n  telefono = '506' + telefono;\n}\n\nconst mensaje = `¡Hola ${$json.nombre}! 👋\\n\\n✅ *Cita Confirmada* - Clínica Dr. William Cruz\\n\\n📅 Fecha: ${$json.fecha}\\n⏰ Hora: ${$json.hora}\\n💼 Servicio: ${$json.servicio}\\n\\n📍 Dirección: Pérez Zeledón, Costa Rica\\n📞 Para cambios: 2770-3198 / 8313-3198\\n\\nLe enviaremos un recordatorio 24 horas antes.\\n\\n¡Esperamos verle pronto! 🏥`;\n\nreturn {\n  json: {\n    ...$json,\n    telefono_whatsapp: telefono,\n    mensaje_whatsapp: mensaje\n  }\n};"
+            {
+              "id": "telefono",
+              "name": "telefono",
+              "value": "={{ $json.body.telefono }}",
+              "type": "string"
             },
-            "id": "format-whatsapp",
-            "name": "Preparar WhatsApp",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                650,
-                300
-            ]
-        },
-        {
-            "parameters": {
-                "authentication": "oAuth2",
-                "operation": "append",
-                "documentId": {
-                    "__rl": true,
-                    "value": "AQUI_TU_SHEET_ID",
-                    "mode": "url"
-                },
-                "sheetName": {
-                    "__rl": true,
-                    "value": "Citas",
-                    "mode": "list"
-                },
-                "columns": {
-                    "mappingMode": "defineBelow",
-                    "value": {
-                        "nombre": "={{ $json.nombre }}",
-                        "apellido": "={{ $json.apellido }}",
-                        "telefono": "={{ $json.telefono }}",
-                        "email": "={{ $json.email }}",
-                        "fecha": "={{ $json.fecha }}",
-                        "hora": "={{ $json.hora }}",
-                        "servicio": "={{ $json.servicio }}",
-                        "estado": "Pendiente",
-                        "notas": "={{ $json.mensaje }}",
-                        "creado_en": "={{ $json.fecha_registro }}"
-                    }
-                }
+            {
+              "id": "email",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
             },
-            "id": "google-sheets-save",
-            "name": "Guardar en Google Sheets",
-            "type": "n8n-nodes-base.googleSheets",
-            "typeVersion": 4,
-            "position": [
-                850,
-                100
-            ]
-        },
-        {
-            "parameters": {
-                "authentication": "oAuth2",
-                "calendar": {
-                    "__rl": true,
-                    "value": "primary",
-                    "mode": "list"
-                },
-                "start": "={{ $json.fecha + 'T' + $json.hora + ':00' }}",
-                "duration": 60,
-                "title": "={{ '🏥 Cita: ' + $json.nombre + ' ' + $json.apellido }}",
-                "description": "=Servicio: {{ $json.servicio }}\nTeléfono: {{ $json.telefono }}\nEmail: {{ $json.email }}\n\nNotas: {{ $json.mensaje }}"
+            {
+              "id": "fecha",
+              "name": "fecha",
+              "value": "={{ $json.body.fecha }}",
+              "type": "string"
             },
-            "id": "google-calendar-create",
-            "name": "Crear Evento en Calendar",
-            "type": "n8n-nodes-base.googleCalendar",
-            "typeVersion": 1.1,
-            "position": [
-                850,
-                200
-            ]
-        },
-        {
-            "parameters": {
-                "resource": "message",
-                "operation": "sendText",
-                "recipientPhoneNumber": "={{ $json.telefono_whatsapp }}",
-                "message": "={{ $json.mensaje_whatsapp }}"
+            {
+              "id": "hora",
+              "name": "hora",
+              "value": "={{ $json.body.hora }}",
+              "type": "string"
             },
-            "id": "whatsapp-confirm",
-            "name": "WhatsApp - Confirmación",
-            "type": "n8n-nodes-base.whatsApp",
-            "typeVersion": 1,
-            "position": [
-                850,
-                300
-            ],
-            "credentials": {
-                "whatsAppApi": {
-                    "id": "TU_CREDENCIAL_ID",
-                    "name": "WhatsApp Clinica"
-                }
+            {
+              "id": "servicio",
+              "name": "servicio",
+              "value": "={{ $json.body.servicio }}",
+              "type": "string"
+            },
+            {
+              "id": "mensaje",
+              "name": "mensaje",
+              "value": "={{ $json.body.mensaje || 'Sin mensaje adicional' }}",
+              "type": "string"
+            },
+            {
+              "id": "fecha_registro",
+              "name": "fecha_registro",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
             }
-        },
-        {
-            "parameters": {
-                "authentication": "oAuth2",
-                "sendTo": "={{ $json.email }}",
-                "subject": "=✅ Cita Confirmada - Clínica Dr. William Cruz",
-                "message": "=<h2>¡Hola {{ $json.nombre }}!</h2><p>Su cita ha sido <strong>confirmada exitosamente</strong>.</p><div style=\"background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 20px 0;\"><h3>📋 Detalles de la Cita:</h3><ul><li>📅 <strong>Fecha:</strong> {{ $json.fecha }}</li><li>⏰ <strong>Hora:</strong> {{ $json.hora }}</li><li>💼 <strong>Servicio:</strong> {{ $json.servicio }}</li></ul></div><h3>📍 Ubicación:</h3><p>Pérez Zeledón, Costa Rica</p><h3>📞 Contacto:</h3><p>Tel: 2770-3198 / 8313-3198<br>Email: drwilliamcruzperez@gmail.com</p><hr><p style=\"color: #666; font-size: 12px;\">Recibirá un recordatorio 24 horas antes de su cita.</p><p>¡Esperamos verle pronto! 🏥</p>"
-            },
-            "id": "gmail-send",
-            "name": "Gmail - Confirmación",
-            "type": "n8n-nodes-base.gmail",
-            "typeVersion": 2,
-            "position": [
-                850,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "chatId": "TU_CHAT_ID",
-                "text": "=🗓️ *NUEVA CITA AGENDADA*\n\n👤 *Paciente:* {{ $json.nombre }} {{ $json.apellido }}\n📞 *Teléfono:* {{ $json.telefono }}\n📧 *Email:* {{ $json.email }}\n\n📅 *Fecha:* {{ $json.fecha }}\n⏰ *Hora:* {{ $json.hora }}\n💼 *Servicio:* {{ $json.servicio }}\n\n💬 *Mensaje:*\n{{ $json.mensaje }}\n\n✅ Confirmada por WhatsApp y Email\n⏱️ {{ $json.fecha_registro }}",
-                "additionalFields": {
-                    "parseMode": "Markdown"
-                }
-            },
-            "id": "telegram-notify",
-            "name": "Telegram - Notificar Equipo",
-            "type": "n8n-nodes-base.telegram",
-            "typeVersion": 1.1,
-            "position": [
-                850,
-                500
-            ]
-        },
-        {
-            "parameters": {
-                "respondWith": "json",
-                "responseBody": "={ \"success\": true, \"message\": \"Cita registrada exitosamente. Recibirá confirmación por WhatsApp y Email.\", \"data\": { \"nombre\": \"{{ $json.nombre }}\", \"fecha\": \"{{ $json.fecha }}\", \"hora\": \"{{ $json.hora }}\" } }"
-            },
-            "id": "respond-success",
-            "name": "Responder al Cliente",
-            "type": "n8n-nodes-base.respondToWebhook",
-            "typeVersion": 1,
-            "position": [
-                1050,
-                300
-            ]
+          ]
         }
-    ],
-    "connections": {
-        "Webhook - Recibir Cita": {
-            "main": [
-                [
-                    {
-                        "node": "Formatear Datos",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
+      },
+      "id": "set-data",
+      "name": "Formatear Datos",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatear teléfono para WhatsApp Cloud API\nlet telefono = $json.telefono.toString().replace(/[\\s\\-\\(\\)\\+]/g, '');\nif (!telefono.startsWith('506')) {\n  telefono = '506' + telefono;\n}\n\nconst mensaje = `¡Hola ${$json.nombre}! 👋\\n\\n✅ *Cita Confirmada* - Clínica Dr. William Cruz\\n\\n📅 Fecha: ${$json.fecha}\\n⏰ Hora: ${$json.hora}\\n💼 Servicio: ${$json.servicio}\\n\\n📍 Dirección: Pérez Zeledón, Costa Rica\\n📞 Para cambios: 2770-3198 / 8313-3198\\n\\nLe enviaremos un recordatorio 24 horas antes.\\n\\n¡Esperamos verle pronto! 🏥`;\n\nreturn {\n  json: {\n    ...$json,\n    telefono_whatsapp: telefono,\n    mensaje_whatsapp: mensaje\n  }\n};"
+      },
+      "id": "format-whatsapp",
+      "name": "Preparar WhatsApp",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "AQUI_TU_SHEET_ID",
+          "mode": "url"
         },
-        "Formatear Datos": {
-            "main": [
-                [
-                    {
-                        "node": "Preparar WhatsApp",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
+        "sheetName": {
+          "__rl": true,
+          "value": "Citas",
+          "mode": "list"
         },
-        "Preparar WhatsApp": {
-            "main": [
-                [
-                    {
-                        "node": "Guardar en Google Sheets",
-                        "type": "main",
-                        "index": 0
-                    },
-                    {
-                        "node": "Crear Evento en Calendar",
-                        "type": "main",
-                        "index": 0
-                    },
-                    {
-                        "node": "WhatsApp - Confirmación",
-                        "type": "main",
-                        "index": 0
-                    },
-                    {
-                        "node": "Gmail - Confirmación",
-                        "type": "main",
-                        "index": 0
-                    },
-                    {
-                        "node": "Telegram - Notificar Equipo",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "WhatsApp - Confirmación": {
-            "main": [
-                [
-                    {
-                        "node": "Responder al Cliente",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ $json.nombre }}",
+            "apellido": "={{ $json.apellido }}",
+            "telefono": "={{ $json.telefono }}",
+            "email": "={{ $json.email }}",
+            "fecha": "={{ $json.fecha }}",
+            "hora": "={{ $json.hora }}",
+            "servicio": "={{ $json.servicio }}",
+            "estado": "Pendiente",
+            "notas": "={{ $json.mensaje }}",
+            "creado_en": "={{ $json.fecha_registro }}"
+          }
         }
+      },
+      "id": "google-sheets-save",
+      "name": "Guardar en Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        850,
+        100
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list"
+        },
+        "start": "={{ $json.fecha + 'T' + $json.hora + ':00' }}",
+        "duration": 60,
+        "title": "={{ '🏥 Cita: ' + $json.nombre + ' ' + $json.apellido }}",
+        "description": "=Servicio: {{ $json.servicio }}\nTeléfono: {{ $json.telefono }}\nEmail: {{ $json.email }}\n\nNotas: {{ $json.mensaje }}"
+      },
+      "id": "google-calendar-create",
+      "name": "Crear Evento en Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.1,
+      "position": [
+        850,
+        200
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "sendText",
+        "recipientPhoneNumber": "={{ $json.telefono_whatsapp }}",
+        "message": "={{ $json.mensaje_whatsapp }}"
+      },
+      "id": "whatsapp-confirm",
+      "name": "WhatsApp - Confirmación",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "TU_CREDENCIAL_ID",
+          "name": "WhatsApp Clinica"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "sendTo": "={{ $json.email }}",
+        "subject": "=✅ Cita Confirmada - Clínica Dr. William Cruz",
+        "message": "=<h2>¡Hola {{ $json.nombre }}!</h2><p>Su cita ha sido <strong>confirmada exitosamente</strong>.</p><div style=\"background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 20px 0;\"><h3>📋 Detalles de la Cita:</h3><ul><li>📅 <strong>Fecha:</strong> {{ $json.fecha }}</li><li>⏰ <strong>Hora:</strong> {{ $json.hora }}</li><li>💼 <strong>Servicio:</strong> {{ $json.servicio }}</li></ul></div><h3>📍 Ubicación:</h3><p>Pérez Zeledón, Costa Rica</p><h3>📞 Contacto:</h3><p>Tel: 2770-3198 / 8313-3198<br>Email: drwilliamcruzperez@gmail.com</p><hr><p style=\"color: #666; font-size: 12px;\">Recibirá un recordatorio 24 horas antes de su cita.</p><p>¡Esperamos verle pronto! 🏥</p>"
+      },
+      "id": "gmail-send",
+      "name": "Gmail - Confirmación",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        850,
+        400
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "chatId": "TU_CHAT_ID",
+        "text": "=🗓️ *NUEVA CITA AGENDADA*\n\n👤 *Paciente:* {{ $json.nombre }} {{ $json.apellido }}\n📞 *Teléfono:* {{ $json.telefono }}\n📧 *Email:* {{ $json.email }}\n\n📅 *Fecha:* {{ $json.fecha }}\n⏰ *Hora:* {{ $json.hora }}\n💼 *Servicio:* {{ $json.servicio }}\n\n💬 *Mensaje:*\n{{ $json.mensaje }}\n\n✅ Confirmada por WhatsApp y Email\n⏱️ {{ $json.fecha_registro }}",
+        "additionalFields": {
+          "parseMode": "Markdown"
+        }
+      },
+      "id": "telegram-notify",
+      "name": "Telegram - Notificar Equipo",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [
+        850,
+        500
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"message\": \"Cita registrada exitosamente. Recibirá confirmación por WhatsApp y Email.\", \"data\": { \"nombre\": \"{{ $json.nombre }}\", \"fecha\": \"{{ $json.fecha }}\", \"hora\": \"{{ $json.hora }}\" } }"
+      },
+      "id": "respond-success",
+      "name": "Responder al Cliente",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        300
+      ]
     }
+  ],
+  "connections": {
+    "Webhook - Recibir Cita": {
+      "main": [
+        [
+          {
+            "node": "Formatear Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear Datos": {
+      "main": [
+        [
+          {
+            "node": "Preparar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Guardar en Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Crear Evento en Calendar",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp - Confirmación",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail - Confirmación",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram - Notificar Equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp - Confirmación": {
+      "main": [
+        [
+          {
+            "node": "Responder al Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
 }

@@ -407,7 +407,7 @@ Similar al anterior, crea `test-citas.html`:
         };
 
         try {
-            const response = await fetch('http://localhost:5678/webhook/cita', {
+            const response = await fetch('http://localhost:5678/webhook/api/citas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -454,7 +454,7 @@ document.getElementById('appointmentForm').addEventListener('submit', async (e) 
     };
 
     // URL de tu webhook n8n
-    const webhookURL = 'https://tu-servidor.com/webhook/cita'; // ⚠️ CAMBIAR ESTO
+    const webhookURL = 'https://tu-servidor.com/webhook/api/citas'; // ⚠️ CAMBIAR ESTO
 
     try {
         const response = await fetch(webhookURL, {

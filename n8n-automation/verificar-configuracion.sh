@@ -68,7 +68,7 @@ if command -v docker &> /dev/null; then
     echo -e "   ${GREEN}✅ Docker instalado: ${docker_version}${NC}"
     
     # Verificar contenedores
-    contenedores_esperados=("n8n" "evolution-api" "postgres")
+    contenedores_esperados=("n8n_clinica" "evolution_api_clinica" "redis_clinica")
     
     for contenedor in "${contenedores_esperados[@]}"; do
         if docker ps --format '{{.Names}}' 2>/dev/null | grep -q "^${contenedor}$"; then
@@ -223,7 +223,7 @@ echo -e "      - GUIA_VISUAL.md"
 echo -e "      - CHECKLIST.md"
 echo ""
 echo -e "   🆘 Comandos útiles:"
-echo -e "      Ver logs:      docker logs n8n"
+echo -e "      Ver logs:      docker logs n8n_clinica"
 echo -e "      Reiniciar:     docker-compose restart"
 echo -e "      Detener:       docker-compose down"
 echo -e "      Iniciar:       docker-compose up -d"

@@ -12,7 +12,10 @@
       "name": "Webhook - Mensajes WhatsApp",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [250, 300],
+      "position": [
+        250,
+        300
+      ],
       "webhookId": "whatsapp-messages"
     },
     {
@@ -36,7 +39,10 @@
       "name": "Filtrar Solo Mensajes Entrantes",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ]
     },
     {
       "parameters": {
@@ -65,28 +71,12 @@
       "name": "Extraer Datos del Mensaje",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ]
     },
     {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.mensaje.toLowerCase() }}",
-              "operation": "contains",
-              "value2": "cita"
-            }
-          ],
-          "boolean": [],
-          "number": []
-        },
-        "combineOperation": "any"
-      },
-      "id": "check-intent",
-      "name": "Detectar Intención",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 1,
-      "position": [850, 300],
       "parameters": {
         "options": {},
         "rules": {
@@ -145,7 +135,15 @@
             }
           ]
         }
-      }
+      },
+      "id": "check-intent",
+      "name": "Detectar Intención",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ]
     },
     {
       "parameters": {
@@ -177,7 +175,10 @@
       "name": "OpenAI - Respuesta Inteligente",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1,
-      "position": [1050, 500],
+      "position": [
+        1050,
+        500
+      ],
       "credentials": {
         "openAiApi": {
           "id": "5",
@@ -203,7 +204,10 @@
       "name": "Respuesta: Agendar Cita",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
-      "position": [1050, 200]
+      "position": [
+        1050,
+        200
+      ]
     },
     {
       "parameters": {
@@ -223,7 +227,10 @@
       "name": "Respuesta: Servicios",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
-      "position": [1050, 100]
+      "position": [
+        1050,
+        100
+      ]
     },
     {
       "parameters": {
@@ -243,7 +250,10 @@
       "name": "Respuesta: Horarios",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
-      "position": [1050, 300]
+      "position": [
+        1050,
+        300
+      ]
     },
     {
       "parameters": {
@@ -263,7 +273,10 @@
       "name": "Respuesta: Ubicación",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
-      "position": [1050, 400]
+      "position": [
+        1050,
+        400
+      ]
     },
     {
       "parameters": {
@@ -290,13 +303,17 @@
       "name": "Enviar Respuesta por WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
-      "position": [1250, 300],
+      "position": [
+        1250,
+        300
+      ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "2",
           "name": "Evolution API"
         }
-      }
+      },
+      "continueOnFail": true
     },
     {
       "parameters": {
@@ -328,13 +345,17 @@
       "name": "Registrar Conversación",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
-      "position": [1450, 300],
+      "position": [
+        1450,
+        300
+      ],
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "1",
           "name": "Google Sheets OAuth2"
         }
-      }
+      },
+      "continueOnFail": true
     }
   ],
   "connections": {
