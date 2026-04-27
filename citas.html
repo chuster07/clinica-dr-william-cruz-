@@ -334,6 +334,47 @@
                             </div>
                         </div>
 
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthDate">Fecha de Nacimiento *</label>
+                                <input type="date" id="birthDate" name="birthDate" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Edad (calculada)</label>
+                                <input type="number" id="age" name="age" class="form-control" min="0" max="120" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="specialty">Especialidad médica que busca *</label>
+                                <select id="specialty" name="specialty" class="form-control" required>
+                                    <option value="" selected disabled>Seleccione una especialidad</option>
+                                    <option value="medicina_general">Medicina General</option>
+                                    <option value="cardiologia">Cardiología</option>
+                                    <option value="dermatologia">Dermatología</option>
+                                    <option value="gastroenterologia">Gastroenterología</option>
+                                    <option value="endocrinologia">Endocrinología</option>
+                                    <option value="nutricion">Nutrición Clínica</option>
+                                    <option value="medicina_integrativa">Medicina Integrativa</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bloodType">Tipo de Sangre *</label>
+                                <select id="bloodType" name="bloodType" class="form-control" required>
+                                    <option value="" selected disabled>Seleccione su tipo de sangre</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="service">Servicio de Interés *</label>
                             <select id="service" name="service" class="form-control" required>
@@ -369,15 +410,34 @@
                                 <option value="" selected disabled>Seleccione el tipo de consulta</option>
                                 <option value="primera_vez">Primera Consulta</option>
                                 <option value="seguimiento">Consulta de Seguimiento</option>
+                                <option value="virtual">Virtual</option>
                                 <option value="emergencia">Consulta de Emergencia</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="symptoms">Síntomas o Motivo de Consulta *</label>
+                            <label for="symptoms">Motivo principal de la consulta y síntomas *</label>
                             <textarea id="symptoms" name="symptoms" class="form-control" rows="4"
-                                placeholder="Describa brevemente sus síntomas o el motivo de su consulta"
+                                placeholder="Describa su motivo de consulta, síntomas actuales y cuándo iniciaron"
                                 required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="allergies">Alergias a medicamentos *</label>
+                            <textarea id="allergies" name="allergies" class="form-control" rows="3"
+                                placeholder="Indique alergias conocidas o escriba 'Ninguna'" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conditions">Condiciones médicas previas (opcional)</label>
+                            <textarea id="conditions" name="conditions" class="form-control" rows="3"
+                                placeholder="Ejemplo: hipertensión, diabetes, cirugías previas"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="medications">Medicamentos actuales (opcional)</label>
+                            <textarea id="medications" name="medications" class="form-control" rows="3"
+                                placeholder="Detalle nombre y dosis de medicamentos que consume actualmente"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -407,7 +467,7 @@
                         <h4><i class="fas fa-exclamation-triangle"></i> Emergencias</h4>
                         <div class="emergency-phone">2770-3198</div>
                         <p>Disponible 24/7 para emergencias médicas</p>
-                        <a href="https://wa.me/50627703198" class="whatsapp-btn" target="_blank">
+                        <a href="https://wa.me/50688202058" class="whatsapp-btn" target="_blank">
                             <i class="fab fa-whatsapp"></i> WhatsApp
                         </a>
                     </div>
@@ -472,10 +532,10 @@
                     <div class="logo"><i class="fas fa-stethoscope"></i> Dr. William Cruz Umaña</div>
                     <p>Clínica Hahnemann y Macrobiótica Salud PZ - Medicina integrativa para su bienestar y salud.</p>
                     <div class="social-icons">
-                        <a href="https://wa.me/50627703198" class="social-icon" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="mailto:clinica@drwilliamcruz.com" class="social-icon" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                        <a href="tel:+50627703198" class="social-icon" aria-label="Teléfono"><i class="fas fa-phone"></i></a>
-                        <a href="index.html#contacto" class="social-icon" aria-label="Contacto"><i class="fas fa-map-marker-alt"></i></a>
+                        <a href="https://wa.me/50688202058" class="social-icon" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/" class="social-icon" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/" class="social-icon" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.twitter.com/" class="social-icon" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
@@ -521,11 +581,18 @@
                 apellido: formData.get('lastName'),
                 email: formData.get('email'),
                 telefono: formData.get('phone'),
+                fecha_nacimiento: formData.get('birthDate'),
+                edad: formData.get('age'),
+                especialidad: formData.get('specialty'),
+                tipo_sangre: formData.get('bloodType'),
                 servicio: formData.get('service'),
                 fecha: formData.get('preferredDate'),
                 hora: formData.get('preferredTime'),
                 tipo_consulta: formData.get('consultationType'),
-                sintomas: formData.get('symptoms'),
+                motivo_consulta: formData.get('symptoms'),
+                alergias_medicamentos: formData.get('allergies'),
+                condiciones_previas: formData.get('conditions') || '',
+                medicamentos_actuales: formData.get('medications') || '',
                 mensaje: formData.get('additionalInfo') || ''
             };
 
@@ -557,10 +624,13 @@
             }
         });
 
-        // Validación de fecha (no permitir fechas pasadas)
+        // Validación de fechas
         const dateInput = document.getElementById('preferredDate');
+        const birthDateInput = document.getElementById('birthDate');
+        const ageInput = document.getElementById('age');
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
+        birthDateInput.setAttribute('max', today);
 
         dateInput.addEventListener('change', function () {
             const selectedDate = new Date(this.value);
@@ -572,6 +642,27 @@
                 this.value = '';
             }
         });
+
+        birthDateInput.addEventListener('change', function () {
+            const birthDate = new Date(this.value);
+            const now = new Date();
+            let age = now.getFullYear() - birthDate.getFullYear();
+            const monthDiff = now.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            ageInput.value = Number.isNaN(age) ? '' : Math.max(age, 0);
+        });
+
+        // Preselección de tipo de consulta para videoconsulta
+        const params = new URLSearchParams(window.location.search);
+        const tipoConsulta = params.get('tipo');
+        const consultationTypeSelect = document.getElementById('consultationType');
+        if (tipoConsulta && consultationTypeSelect.querySelector(`option[value="${tipoConsulta}"]`)) {
+            consultationTypeSelect.value = tipoConsulta;
+        }
 
         // Formatear teléfono mientras escribe
         document.getElementById('phone').addEventListener('input', function (e) {

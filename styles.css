@@ -294,8 +294,13 @@ body {
 
 .btn-primary {
     background-color: var(--color-primary);
-    color: var(--text-inverse);
+    color: var(--text-inverse) !important;
     box-shadow: var(--shadow-md);
+}
+
+.hero-cta .btn-primary,
+.appointment-cta .btn-primary {
+    color: var(--text-inverse) !important;
 }
 
 .btn-primary:hover {

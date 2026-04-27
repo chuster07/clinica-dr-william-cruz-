@@ -372,7 +372,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Salud Holística</a>
                             <a href="blog.html#blog-main" class="blog-tag">Bienestar</a>
                         </div>
-                        <a href="blog.html#post-1" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <article class="blog-post" id="post-2">
@@ -394,7 +394,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Nutrición</a>
                             <a href="blog.html#blog-main" class="blog-tag">Alimentación Saludable</a>
                         </div>
-                        <a href="blog.html#post-2" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <article class="blog-post" id="post-3">
@@ -416,7 +416,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Plantas Medicinales</a>
                             <a href="blog.html#blog-main" class="blog-tag">Medicina Natural</a>
                         </div>
-                        <a href="blog.html#post-3" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <article class="blog-post" id="post-4">
@@ -438,7 +438,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Bienestar Mental</a>
                             <a href="blog.html#blog-main" class="blog-tag">Meditación</a>
                         </div>
-                        <a href="blog.html#post-4" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <article class="blog-post" id="post-5">
@@ -460,7 +460,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Probióticos</a>
                             <a href="blog.html#blog-main" class="blog-tag">Digestión</a>
                         </div>
-                        <a href="blog.html#post-5" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <article class="blog-post" id="post-6">
@@ -481,7 +481,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Hígado</a>
                             <a href="blog.html#blog-main" class="blog-tag">Bienestar</a>
                         </div>
-                        <a href="blog.html#post-6" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <article class="blog-post" id="post-7">
@@ -502,7 +502,7 @@
                             <a href="blog.html#blog-main" class="blog-tag">Melatonina</a>
                             <a href="blog.html#blog-main" class="blog-tag">Ritmos circadianos</a>
                         </div>
-                        <a href="blog.html#post-7" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                        <a href="citas.html" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
                     </article>
 
                     <!-- Paginación -->
@@ -521,6 +521,12 @@
                         <h3>Post Destacado</h3>
                         <p>Cómo empezar con la Medicina Integrativa: pasos prácticos para su primera consulta.</p>
                         <a href="blog.html#post-1" class="btn btn-secondary">Leer ahora</a>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h3>Portal de Pacientes</h3>
+                        <p>Acceda rápido a su consulta virtual y opciones de cuenta.</p>
+                        <a href="citas.html?tipo=virtual" class="btn btn-primary" style="width:100%;margin-top:.75rem">Iniciar Videoconsulta</a>
+                        <button type="button" class="btn btn-outline" id="forgotPasswordBtn" style="width:100%;margin-top:.75rem">¿Olvidaste tu contraseña?</button>
                     </div>
                     <!-- Búsqueda -->
                     <div class="sidebar-widget">
@@ -604,6 +610,21 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        document.querySelectorAll('.blog-post-image').forEach((img) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => {
+                window.location.href = 'citas.html';
+            });
+        });
+
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        if (forgotPasswordBtn) {
+            forgotPasswordBtn.addEventListener('click', () => {
+                alert('Funcionalidad próximamente');
+            });
+        }
+    </script>
 </body>
 
 </html>
