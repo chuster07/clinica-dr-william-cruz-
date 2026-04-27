@@ -1,0 +1,28 @@
+INSTRUCCIONES MUY SIMPLES (COPIAR Y PEGAR EN TU TERMINAL LOCAL)
+
+IMPORTANTE:
+- Estos comandos se ejecutan en TU computadora local.
+- Reemplaza /RUTA/A/TUS/ARCHIVOS por la carpeta donde tengas los archivos actualizados.
+
+1) Clona el repositorio
+
+git clone https://github.com/chuster07/clinica-dr-william-cruz-.git
+cd clinica-dr-william-cruz-
+
+2) Copia tus archivos actualizados dentro del repo clonado
+
+cp -r /RUTA/A/TUS/ARCHIVOS/* .
+
+3) Sube los cambios
+
+git add .
+git commit -m "Subir cambios pendientes del proyecto"
+git push origin main
+
+Si te pide usuario/contraseña en GitHub:
+- Usuario: tu usuario de GitHub
+- Contraseña: usa un Personal Access Token (PAT), no tu password normal.
+
+Comando opcional para verificar antes de hacer push:
+
+git status
