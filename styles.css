@@ -97,16 +97,6 @@ body {
     padding: 0.5rem 0;
 }
 
-.nav-link {
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.nav-link:hover {
-    color: var(--white) !important;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-}
-
 .nav-link.active {
     background: rgba(255, 255, 255, 0.1);
     color: var(--white) !important;
@@ -715,10 +705,9 @@ body {
     z-index: 1;
 }
 
-.contact-section .section-header h2,
-.contact-section .section-header p {
+.contact-section .section-header h2 {
     color: #fff;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, .35)
+    text-shadow: 0 2px 6px rgba(0, 0, 0, .35);
 }
 
 .contact-section .section-header {
@@ -732,6 +721,8 @@ body {
 }
 
 .contact-section .section-header p {
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, .35);
     font-size: 1.1rem;
     font-weight: 600;
 }
