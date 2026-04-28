@@ -1,0 +1,267 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "value": 6
+                        }
+                    ]
+                }
+            },
+            "name": "Ejecutar cada 6 horas",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                540,
+                2320
+            ],
+            "id": "f2d31add-3ecd-4737-9c13-044e65e9b4d1"
+        },
+        {
+            "parameters": {
+                "documentId": {
+                    "__rl": true,
+                    "value": "1Pnp6vGwPnKsaeqEbKCeLirHI6cUwbEe1TyXqNg3gZzs",
+                    "mode": "list"
+                },
+                "sheetName": {
+                    "__rl": true,
+                    "value": "gid=0",
+                    "mode": "list"
+                },
+                "options": {}
+            },
+            "name": "Obtener Citas Pendientes",
+            "type": "n8n-nodes-base.googleSheets",
+            "typeVersion": 4,
+            "position": [
+                780,
+                2320
+            ],
+            "id": "e7d7ba2b-8aa0-402d-9179-17d3c4b765b7",
+            "credentials": {
+                "googleSheetsOAuth2Api": {
+                    "id": "10Tn3nAdFC8csA90",
+                    "name": "Google Sheets account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "// Filtra citas que tengan correo/email, estado 'pendiente'\nreturn items.filter(item => {\n  const email = item.json.email || item.json.correo;\n  const estado = item.json.estado || '';\n  return email && estado.toLowerCase() === 'pendiente';\n}).map(item => {\n  // Normalizar para que nodos siguientes tengan 'email'\n  return {\n    json: {\n      ...item.json,\n      email: item.json.email || item.json.correo\n    }\n  };\n});"
+            },
+            "name": "Filtrar Citas Pendientes",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1000,
+                2320
+            ],
+            "id": "84446272-c9eb-45b7-9488-55e5ae7bef26"
+        },
+        {
+            "parameters": {
+                "sendTo": "={{$json.email}}",
+                "subject": "Recordatorio de su cita médica - Clínica Dr. William Cruz",
+                "message": "={{$json.output.text}}",
+                "options": {}
+            },
+            "name": "Enviar Email Recordatorio",
+            "type": "n8n-nodes-base.gmail",
+            "typeVersion": 2,
+            "position": [
+                1660,
+                2320
+            ],
+            "id": "9eb11827-e794-406b-bb80-23b592ebc3d9",
+            "credentials": {
+                "gmailOAuth2": {
+                    "id": "bzAdUhjLkKfTGj1M",
+                    "name": "Gmail account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "documentId": {
+                    "__rl": true,
+                    "value": "1Pnp6vGwPnKsaeqEbKCeLirHI6cUwbEe1TyXqNg3gZzs",
+                    "mode": "list"
+                },
+                "sheetName": {
+                    "__rl": true,
+                    "value": "gid=0",
+                    "mode": "list"
+                },
+                "filters": {
+                    "conditions": [
+                        {
+                            "key": "email",
+                            "value": "={{$json.email}}"
+                        },
+                        {
+                            "key": "fecha",
+                            "value": "={{$json.fecha}}"
+                        }
+                    ]
+                },
+                "updateFields": {
+                    "values": [
+                        {
+                            "key": "estado",
+                            "value": "recordado"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "name": "Marcar como Recordado",
+            "type": "n8n-nodes-base.googleSheets",
+            "typeVersion": 4,
+            "position": [
+                1880,
+                2320
+            ],
+            "id": "96b06623-864c-4aeb-8a0a-dd7af7fcd103",
+            "credentials": {
+                "googleSheetsOAuth2Api": {
+                    "id": "10Tn3nAdFC8csA90",
+                    "name": "Google Sheets account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "promptType": "guardrails",
+                "options": {
+                    "systemMessage": "Eres el asistente virtual oficial de la Clínica del Dr. William Cruz.\n\nFunción: Envío de recordatorios de citas.\nPaciente: {{$json.nombre}}\nCita: {{$json.fecha}} a las {{$json.hora}}\nServicio: {{$json.servicio}}\n\nInstrucciones:\n1. Saluda por su nombre.\n2. Confirma los detalles de la cita.\n3. Pregunta si tiene alguna duda.\n4. Mantén un tono profesional y humano.\n5. El mensaje debe ser breve y claro."
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 3,
+            "position": [
+                1220,
+                2320
+            ],
+            "id": "8b158a5a-75a9-4909-a043-057f96504d4d",
+            "name": "AI Agent"
+        },
+        {
+            "parameters": {
+                "model": {
+                    "__rl": true,
+                    "mode": "list",
+                    "value": "gpt-4o-mini"
+                },
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+            "typeVersion": 1.3,
+            "position": [
+                1220,
+                2540
+            ],
+            "id": "b98844e0-9873-44fd-8d14-4ce2df4c2d1f",
+            "name": "OpenAI Chat Model",
+            "credentials": {
+                "openAiApi": {
+                    "id": "15SAciJYJ2B6kISW",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {},
+            "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+            "typeVersion": 1.3,
+            "position": [
+                1440,
+                2540
+            ],
+            "id": "cde7efc5-206a-4193-ba51-30aac98473ac",
+            "name": "Simple Memory"
+        }
+    ],
+    "connections": {
+        "Ejecutar cada 6 horas": {
+            "main": [
+                [
+                    {
+                        "node": "Obtener Citas Pendientes",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Obtener Citas Pendientes": {
+            "main": [
+                [
+                    {
+                        "node": "Filtrar Citas Pendientes",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Filtrar Citas Pendientes": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Agent": {
+            "main": [
+                [
+                    {
+                        "node": "Enviar Email Recordatorio",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Enviar Email Recordatorio": {
+            "main": [
+                [
+                    {
+                        "node": "Marcar como Recordado",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "OpenAI Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Simple Memory": {
+            "ai_memory": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_memory",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

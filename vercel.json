@@ -1,9 +1,20 @@
 {
     "version": 2,
-    "public": true,
     "cleanUrls": true,
     "trailingSlash": false,
     "routes": [
+        {
+            "src": "/citas",
+            "dest": "/citas.html"
+        },
+        {
+            "src": "/blog",
+            "dest": "/blog.html"
+        },
+        {
+            "src": "/faq",
+            "dest": "/faq.html"
+        },
         {
             "handle": "filesystem"
         },

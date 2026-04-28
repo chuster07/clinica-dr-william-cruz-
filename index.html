@@ -44,6 +44,67 @@
     <meta name="theme-color" content="#2c7873">
     <meta name="msapplication-TileColor" content="#2c7873">
     <link rel="canonical" href="https://www.drwilliamcruz.com">
+    
+    <!-- Datos Estructurados Médicos - Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Physician",
+        "name": "Dr. William Cruz Umaña",
+        "medicalSpecialty": ["Alternative Medicine", "Integrative Medicine", "Nutritional Medicine"],
+        "description": "Especialista en Medicina Integrativa y Macrobiótica con más de 15 años de experiencia en San José, Costa Rica",
+        "url": "https://www.drwilliamcruz.com",
+        "telephone": "+506-2770-3198",
+        "email": "drwilliamcruzperez@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Macrobiótica Salud PZ",
+            "addressLocality": "San José",
+            "addressCountry": "Costa Rica"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 9.9281,
+            "longitude": -84.0776
+        },
+        "openingHours": [
+            "Mo-Fr 08:00-18:00",
+            "Sa 08:00-12:00"
+        ],
+        "priceRange": "$$",
+        "paymentAccepted": ["Cash", "Credit Card", "Transfer"],
+        "currenciesAccepted": "CRC",
+        "hasCredential": {
+            "@type": "EducationalOccupationalCredential",
+            "credentialCategory": "Medical Degree",
+            "recognizedBy": "Colegio de Médicos y Cirujanos de Costa Rica"
+        },
+        "worksAt": {
+            "@type": "MedicalClinic",
+            "name": "Clínica Hahnemann",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Macrobiótica Salud PZ",
+                "addressLocality": "San José",
+                "addressCountry": "Costa Rica"
+            }
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "150"
+        },
+        "knowsAbout": [
+            "Medicina Integrativa",
+            "Macrobiótica",
+            "Fitoterapia",
+            "Terapias Naturales",
+            "Nutrición Holística"
+        ],
+        "servesCuisine": "Costa Rica"
+    }
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -188,11 +249,11 @@
                         <div class="brand-subtitle">Medicina Integrativa</div>
                     </div>
                 </div>
-                <div class="menu-toggle" id="mobile-menu">
+                <button class="menu-toggle" id="mobile-menu" type="button" aria-label="Abrir menú" aria-expanded="false">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
-                </div>
+                </button>
                 <ul class="nav-menu">
                     <li><a href="#inicio" class="nav-link">Inicio</a></li>
                     <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
@@ -209,25 +270,26 @@
         </nav>
     </header>
 
-    <!-- Sección Hero -->
+    <!-- Sección Hero Mejorada -->
     <section id="inicio" class="hero" itemscope itemtype="https://schema.org/MedicalOrganization">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-image" data-aos="fade-left">
-                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=facearea&facepad=6&w=800&h=600&q=95"
-                        alt="Dr. William Cruz Umaña" itemprop="image">
+        <div class="container hero-grid">
+            <div class="hero-text-content" data-aos="fade-right">
+                <h1 itemprop="name">Tu Salud es Nuestra Prioridad</h1>
+                <p class="subtitle" itemprop="description">
+                    Atención médica de calidad con tecnología de vanguardia. <br>
+                    Agenda tu cita hoy mismo y cuida de tu bienestar.
+                </p>
+                <div class="hero-cta">
+                    <a href="citas.html" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Agendar Cita</a>
+                    <a href="#contacto" class="btn btn-outline"><i class="fas fa-video"></i> Consulta Virtual</a>
                 </div>
-                <div class="hero-text-content">
-                    <h1 itemprop="name">Tu Salud es Nuestra Prioridad</h1>
-                    <p class="subtitle" itemprop="description">
-                        Atención médica de calidad con tecnología de vanguardia. <br>
-                        Agenda tu cita hoy mismo y cuida de tu bienestar.
-                    </p>
-                    <div class="hero-cta">
-                        <a href="citas.html" class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Agendar
-                            Cita</a>
-                        <a href="#" class="btn btn-outline btn-virtu"><i class="fas fa-video"></i> Consulta Virtual</a>
-                    </div>
+            </div>
+            <div class="hero-image-container" data-aos="fade-left">
+                <img src="clinica-react-app/public/doctor.png?v=2" alt="Dr. William Cruz Umaña" itemprop="image"
+                    class="doctor-photo">
+                <div class="experience-badge">
+                    <span class="badge-number">+15</span>
+                    <span class="badge-text">Años de Exp.</span>
                 </div>
             </div>
         </div>
@@ -560,16 +622,16 @@
             <div class="contact-form">
                 <form action="#" method="POST">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nombre completo" required>
+                        <input type="text" name="nombre" class="form-control" placeholder="Nombre completo" autocomplete="name" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Correo electrónico" required>
+                        <input type="email" name="email" class="form-control" placeholder="Correo electrónico" autocomplete="email" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" class="form-control" placeholder="Teléfono">
+                        <input type="tel" name="telefono" class="form-control" placeholder="Teléfono" autocomplete="tel">
                     </div>
                     <div class="form-group">
-                        <select class="form-control" required>
+                        <select name="servicio" class="form-control" required>
                             <option value="" selected disabled>Seleccione un servicio</option>
                             <option value="medicina_integrativa">Medicina Integrativa</option>
                             <option value="macrobiotic">Terapia Nutricional Macrobiótica</option>
@@ -580,7 +642,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" placeholder="Mensaje o consulta" required></textarea>
+                        <textarea name="mensaje" class="form-control" rows="5" placeholder="Mensaje o consulta" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
                 </form>
@@ -653,7 +715,7 @@
 
             <div class="footer-bottom">
                 <div class="copyright">
-                    <p>&copy; 2023 Dr. William Cruz Umaña - Clínica Hahnemann. Todos los derechos reservados.</p>
+                    <p>&copy; 2026 Dr. William Cruz Umaña - Clínica Hahnemann. Todos los derechos reservados.</p>
                 </div>
                 <div class="legal-links">
                     <a href="privacidad.html">Política de Privacidad</a>
@@ -667,7 +729,7 @@
 
     <!-- Botón Flotante WhatsApp -->
     <div class="floating-buttons">
-        <a href="https://wa.me/50688202058" class="float-right" title="WhatsApp">
+        <a href="https://wa.me/50627703198" class="float-right" title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>

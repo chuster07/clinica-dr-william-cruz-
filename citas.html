@@ -17,6 +17,78 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    
+    <!-- Datos Estructurados Médicos - Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "Clínica Hahnemann - Dr. William Cruz Umaña",
+        "description": "Especialista en Medicina Integrativa y Macrobiótica en San José, Costa Rica",
+        "url": "https://www.drwilliamcruz.com",
+        "telephone": "+506-2770-3198",
+        "email": "drwilliamcruzperez@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Macrobiótica Salud PZ",
+            "addressLocality": "San José",
+            "addressCountry": "Costa Rica"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 9.9281,
+            "longitude": -84.0776
+        },
+        "openingHours": [
+            "Mo-Fr 08:00-18:00",
+            "Sa 08:00-12:00"
+        ],
+        "priceRange": "$$",
+        "paymentAccepted": ["Cash", "Credit Card", "Transfer"],
+        "currenciesAccepted": "CRC",
+        "specialty": [
+            "Medicina Integrativa",
+            "Medicina Macrobiótica", 
+            "Fitoterapia",
+            "Terapias Mente-Cuerpo"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Servicios Médicos",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "MedicalProcedure",
+                        "name": "Medicina Integrativa"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "MedicalProcedure",
+                        "name": "Terapia Nutricional Macrobiótica"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "MedicalProcedure",
+                        "name": "Fitoterapia y Medicina Natural"
+                    }
+                }
+            ]
+        },
+        "medicalSpecialty": "Alternative Medicine",
+        "isAcceptingNewPatients": true,
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "150"
+        }
+    }
+    </script>
+    
     <style>
         .appointment-hero {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
@@ -55,12 +127,36 @@
         }
 
         .appointment-form {
-            background-color: var(--bg-card);
+            background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
             border-radius: var(--border-radius);
-            padding: 3rem;
+            padding: 2.5rem;
             box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .appointment-form label {
+            color: var(--text-primary) !important;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .appointment-form .form-control {
+            color: var(--text-primary) !important;
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid rgba(0, 105, 92, 0.2);
+        }
+
+        .appointment-form .form-control:focus {
+            color: var(--text-primary) !important;
+            background-color: white !important;
+        }
+
+        .appointment-form select.form-control option {
+            color: var(--text-primary) !important;
+            background-color: white !important;
         }
 
         .form-header {
@@ -94,13 +190,14 @@
 
         .form-control {
             width: 100%;
-            padding: 0.85rem;
-            border: 1px solid var(--glass-border);
+            padding: 0.75rem;
+            border: 1px solid var(--gray);
             border-radius: var(--border-radius);
             outline: none;
             transition: var(--transition);
             font-size: 1rem;
-            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-primary) !important;
+            background-color: rgba(255, 255, 255, 0.9) !important;
         }
 
         .form-control:focus {
@@ -255,23 +352,6 @@
             }
         }
     </style>
-
-    @media screen and (min-width: 768px) {
-    .appointment-container {
-    grid-template-columns: 1fr 1fr;
-    }
-
-    .form-row {
-    grid-template-columns: 1fr 1fr;
-    }
-    }
-
-    @media screen and (min-width: 992px) {
-    .appointment-hero h1 {
-    font-size: 3.5rem;
-    }
-    }
-    </style>
 </head>
 
 <body>
@@ -282,11 +362,11 @@
                 <div class="logo">
                     <i class="fas fa-stethoscope"></i> Dr. William Cruz Umaña
                 </div>
-                <div class="menu-toggle" id="mobile-menu">
+                <button class="menu-toggle" id="mobile-menu" type="button" aria-label="Abrir menú" aria-expanded="false">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
-                </div>
+                </button>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Inicio</a></li>
                     <li><a href="index.html#sobre-mi" class="nav-link">Sobre Mí</a></li>
@@ -494,107 +574,13 @@
 
             <div class="footer-bottom">
                 <div class="copyright">
-                    <p>&copy; 2023 Dr. William Cruz Umaña - Clínica Hahnemann. Todos los derechos reservados.</p>
+                    <p>&copy; 2026 Dr. William Cruz Umaña - Clínica Hahnemann. Todos los derechos reservados.</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script>
-        // Integración con N8N - Formulario de citas
-        const N8N_CITAS_URL = 'https://c19-ef2.aiagent777.co/webhook/citas';
-
-        document.getElementById('appointmentForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Validación básica
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
-
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.classList.add('error');
-                    isValid = false;
-                } else {
-                    field.classList.remove('error');
-                }
-            });
-
-            if (!isValid) {
-                alert('Por favor, complete todos los campos requeridos.');
-                return;
-            }
-
-            // Obtener datos del formulario
-            const formData = new FormData(this);
-            const data = {
-                nombre: formData.get('firstName'),
-                apellido: formData.get('lastName'),
-                email: formData.get('email'),
-                telefono: formData.get('phone'),
-                servicio: formData.get('service'),
-                fecha: formData.get('preferredDate'),
-                hora: formData.get('preferredTime'),
-                tipo_consulta: formData.get('consultationType'),
-                sintomas: formData.get('symptoms'),
-                mensaje: formData.get('additionalInfo') || ''
-            };
-
-            // Mostrar loader
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalHTML = submitButton.innerHTML;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-            submitButton.disabled = true;
-
-            try {
-                const response = await fetch(N8N_CITAS_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    alert('✅ ¡Cita registrada exitosamente!\n\nRecibirá confirmación por WhatsApp y Email en los próximos minutos.\n\n¡Gracias por confiar en nosotros!');
-                    this.reset();
-                } else {
-                    throw new Error('Error al procesar');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Hubo un problema al enviar su solicitud.\n\nPor favor contacte directamente:\n📞 2770-3198 / 8313-3198\n📧 clinica@drwilliamcruz.com');
-            } finally {
-                submitButton.innerHTML = originalHTML;
-                submitButton.disabled = false;
-            }
-        });
-
-        // Validación de fecha (no permitir fechas pasadas)
-        const dateInput = document.getElementById('preferredDate');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
-
-        dateInput.addEventListener('change', function () {
-            const selectedDate = new Date(this.value);
-            const todayDate = new Date();
-            todayDate.setHours(0, 0, 0, 0);
-
-            if (selectedDate < todayDate) {
-                alert('Por favor, seleccione una fecha futura.');
-                this.value = '';
-            }
-        });
-
-        // Formatear teléfono mientras escribe
-        document.getElementById('phone').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/[^0-9]/g, '');
-            if (value.length > 8) value = value.slice(0, 8);
-            if (value.length > 4) {
-                value = value.slice(0, 4) + '-' + value.slice(4);
-            }
-            e.target.value = value;
-        });
-    </script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
