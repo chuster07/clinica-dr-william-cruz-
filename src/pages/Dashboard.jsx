@@ -46,6 +46,46 @@ const Dashboard = ({ isAuthenticated }) => {
             </motion.div>
           ))}
         </div>
+
+        {/* Sección de Actividad Reciente */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-12 card"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white flex items-center">
+              <TrendingUp className="w-5 h-5 mr-2 text-primary-500" />
+              Actividad Reciente
+            </h2>
+            <badge className="px-3 py-1 bg-primary-500/10 text-primary-400 rounded-full text-xs font-semibold border border-primary-500/20">
+              En Vivo
+            </badge>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              { type: 'Cita', info: 'Nuevo paciente: María García', time: 'Hace 5 min', status: 'Confirmada' },
+              { type: 'AI Recordatorio', info: 'Email enviado a Carlos Ruíz', time: 'Hace 12 min', status: 'Exitoso' },
+              { type: 'Pago', info: 'Factura #9822 - Ana Martínez', time: 'Hace 25 min', status: 'Completado' },
+              { type: 'Telemedicina', info: 'Consulta Dr. Cruz terminada', time: 'Hace 1 hr', status: 'Finalizado' },
+            ].map((activity, i) => (
+              <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-primary-500/30 transition-colors">
+                <div className="flex items-center space-x-4">
+                  <div className="w-2 h-2 rounded-full bg-primary-500 shadow-[0_0_10px_rgba(44,120,115,0.8)]"></div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{activity.info}</p>
+                    <p className="text-xs text-gray-500">{activity.type} • {activity.time}</p>
+                  </div>
+                </div>
+                <span className="text-xs font-medium text-medical-400 bg-medical-900/30 px-2 py-1 rounded">
+                  {activity.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

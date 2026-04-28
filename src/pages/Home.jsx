@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  Calendar, Video, Users, Clock, 
+import {
+  Calendar, Video, Users, Clock,
   Shield, Award, HeartPulse, Stethoscope,
-  CheckCircle, Star, ArrowRight 
+  CheckCircle, Star, ArrowRight
 } from 'lucide-react';
 
 const Home = () => {
@@ -65,7 +65,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-700 via-teal-600 to-emerald-500 text-white py-20 overflow-hidden" style={{background: 'linear-gradient(135deg, #2c7873 0%, #6fb98f 50%, #4ade80 100%)'}}>>
+      <section className="relative bg-gradient-to-br from-teal-700 via-teal-600 to-emerald-500 text-white py-20 overflow-hidden" style={{ background: 'linear-gradient(135deg, #2c7873 0%, #6fb98f 50%, #4ade80 100%)' }}>
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -79,20 +79,20 @@ const Home = () => {
                 <span className="block text-medical-300">Prioridad</span>
               </h1>
               <p className="text-xl mb-8 text-white/90">
-                Atención médica de calidad con tecnología de vanguardia. 
+                Atención médica de calidad con tecnología de vanguardia.
                 Agenda tu cita hoy mismo y cuida de tu bienestar.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link 
-                  to="/citas" 
+                <Link
+                  to="/citas"
                   className="bg-white text-slate-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <Calendar className="w-5 h-5" />
                   <span>Agendar Cita</span>
                 </Link>
-                <Link 
-                  to="/telemedicina" 
-                  className="text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1" style={{background: 'linear-gradient(135deg, #6fb98f 0%, #4ade80 100%)'}} onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #4ade80 0%, #3cb371 100%)'} onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #6fb98f 0%, #4ade80 100%)'}
+                <Link
+                  to="/telemedicina"
+                  className="text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1" style={{ background: 'linear-gradient(135deg, #6fb98f 0%, #4ade80 100%)' }} onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #4ade80 0%, #3cb371 100%)'} onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #6fb98f 0%, #4ade80 100%)'}
                 >
                   <Video className="w-5 h-5" />
                   <span>Consulta Virtual</span>
@@ -109,16 +109,16 @@ const Home = () => {
               <div className="relative w-full max-w-sm md:max-w-md lg:max-w-lg">
                 {/* Fondo decorativo */}
                 <div className="absolute inset-0 bg-white/10 rounded-2xl md:rounded-3xl transform rotate-3 md:rotate-6"></div>
-                
+
                 {/* Imagen del doctor */}
-                <img 
-                  src="/doctor.png" 
-                  alt="Dr. William Cruz" 
-                  className="relative rounded-2xl md:rounded-3xl shadow-2xl w-full h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain md:object-cover"
+                <img
+                  src="/doctor.png"
+                  alt="Dr. William Cruz"
+                  className="relative rounded-2xl md:rounded-3xl shadow-2xl w-full h-auto aspect-[4/5] object-cover"
                   loading="eager"
-                  style={{ objectPosition: 'center center' }}
+                  style={{ objectPosition: 'center 10%' }}
                 />
-                
+
                 {/* Badge de experiencia */}
                 <div className="absolute -bottom-4 -right-2 sm:bottom-4 sm:right-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-3 md:p-4 rounded-xl shadow-2xl">
                   <div className="flex items-center space-x-2 md:space-x-3">
@@ -213,7 +213,7 @@ const Home = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Link 
+            <Link
               to="/servicios"
               className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-semibold text-lg group"
             >
@@ -276,7 +276,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 text-white relative overflow-hidden" style={{background: 'linear-gradient(90deg, #2c7873 0%, #6fb98f 50%, #4ade80 100%)'}}>
+      <section className="py-20 text-white relative overflow-hidden" style={{ background: 'linear-gradient(90deg, #2c7873 0%, #6fb98f 50%, #4ade80 100%)' }}>
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
@@ -290,7 +290,7 @@ const Home = () => {
             <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
               Agenda tu cita hoy mismo y experimenta atención médica de calidad
             </p>
-            <Link 
+            <Link
               to="/citas"
               className="inline-flex items-center space-x-2 bg-white text-primary-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >

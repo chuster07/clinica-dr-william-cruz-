@@ -13,6 +13,7 @@ import PatientPortal from './pages/PatientPortal';
 import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
+import { Privacy, Terms, Cookies } from './pages/Legal';
 import ChatWidget from './components/chat/ChatWidget';
 import WhatsAppButton from './components/social/WhatsAppButton';
 
@@ -38,12 +39,12 @@ function App() {
       <MetaTags />
       <SkipToContent />
       <div className="min-h-screen flex flex-col">
-        <Navbar 
-          darkMode={darkMode} 
+        <Navbar
+          darkMode={darkMode}
           toggleDarkMode={toggleDarkMode}
           isAuthenticated={isAuthenticated}
         />
-        
+
         <main id="main-content" className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -54,19 +55,22 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/contacto" element={<Contact />} />
             <Route path="/dashboard" element={<Dashboard isAuthenticated={isAuthenticated} />} />
+            <Route path="/privacidad" element={<Privacy />} />
+            <Route path="/terminos" element={<Terms />} />
+            <Route path="/cookies" element={<Cookies />} />
           </Routes>
         </main>
 
         <Footer />
-        
+
         {/* Chat Widget flotante */}
         <ChatWidget />
-        
+
         {/* WhatsApp Button */}
         <WhatsAppButton />
-        
+
         {/* Notificaciones Toast */}
-        <Toaster 
+        <Toaster
           position="top-right"
           toastOptions={{
             duration: 4000,

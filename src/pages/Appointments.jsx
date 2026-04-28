@@ -1,18 +1,14 @@
-import { useState } from 'react';
 import { Calendar as CalendarIcon, Clock, User, Phone, Mail, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import toast from 'react-hot-toast';
+import { useAppointments } from '../hooks/useAppointments';
 
+/**
+ * Appointments Component - Presentation Layer
+ * Pure UI Component following SOLID principles.
+ * All logic delegated to useAppointments hook.
+ */
 const Appointments = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    date: '',
-    time: '',
-    service: '',
-    notes: ''
-  });
+  const { formData, loading, handleChange, submitAppointment } = useAppointments();
 
   const services = [
     'Consulta General',
@@ -28,35 +24,13 @@ const Appointments = () => {
     '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
   ];
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await submitAppointment();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Validación básica
-    if (!formData.name || !formData.email || !formData.phone || !formData.date || !formData.time || !formData.service) {
-      toast.error('Por favor completa todos los campos requeridos');
-      return;
-    }
-
-    // Simular envío
-    toast.success('¡Cita agendada exitosamente! Te enviaremos un correo de confirmación.');
-    
-    // Limpiar formulario
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      date: '',
-      time: '',
-      service: '',
-      notes: ''
-    });
+  const handleTimeSelect = (time) => {
+    handleChange({ target: { name: 'time', value: time } });
   };
 
   return (
@@ -98,8 +72,8 @@ const Appointments = () => {
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="nombre"
+                    value={formData.nombre}
                     onChange={handleChange}
                     className="input-field"
                     placeholder="Juan Pérez"
@@ -112,8 +86,8 @@ const Appointments = () => {
                   </label>
                   <input
                     type="tel"
-                    name="phone"
-                    value={formData.phone}
+                    name="telefono"
+                    value={formData.telefono}
                     onChange={handleChange}
                     className="input-field"
                     placeholder="+506 8820-2058"
@@ -127,8 +101,8 @@ const Appointments = () => {
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
+                  name="correo"
+                  value={formData.correo}
                   onChange={handleChange}
                   className="input-field"
                   placeholder="correo@ejemplo.com"
@@ -149,8 +123,8 @@ const Appointments = () => {
                     Servicio *
                   </label>
                   <select
-                    name="service"
-                    value={formData.service}
+                    name="servicio"
+                    value={formData.servicio}
                     onChange={handleChange}
                     className="input-field"
                     required
@@ -167,8 +141,8 @@ const Appointments = () => {
                   </label>
                   <input
                     type="date"
-                    name="date"
-                    value={formData.date}
+                    name="fecha"
+                    value={formData.fecha}
                     onChange={handleChange}
                     className="input-field"
                     min={new Date().toISOString().split('T')[0]}
@@ -178,19 +152,18 @@ const Appointments = () => {
               </div>
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Hora Preferida *
+                  Hora Preferida (Opcional)
                 </label>
                 <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
                   {timeSlots.map((time) => (
                     <button
                       key={time}
                       type="button"
-                      onClick={() => setFormData({ ...formData, time })}
-                      className={`py-2 px-4 rounded-lg border-2 transition-all duration-200 ${
-                        formData.time === time
-                          ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                          : 'border-gray-300 dark:border-gray-600 hover:border-primary-400'
-                      }`}
+                      onClick={() => handleTimeSelect(time)}
+                      className={`py-2 px-4 rounded-lg border-2 transition-all duration-200 ${formData.time === time
+                        ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
+                        : 'border-gray-300 dark:border-gray-600 hover:border-primary-400'
+                        }`}
                     >
                       {time}
                     </button>
@@ -205,8 +178,8 @@ const Appointments = () => {
                 Notas Adicionales (Opcional)
               </label>
               <textarea
-                name="notes"
-                value={formData.notes}
+                name="mensaje"
+                value={formData.mensaje}
                 onChange={handleChange}
                 className="input-field"
                 rows="4"
@@ -217,10 +190,12 @@ const Appointments = () => {
             {/* Botón de Envío */}
             <button
               type="submit"
-              className="w-full btn-primary flex items-center justify-center space-x-2 py-3 text-lg"
+              disabled={loading}
+              className={`w-full btn-primary flex items-center justify-center space-x-2 py-3 text-lg ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               <CheckCircle className="w-5 h-5" />
-              <span>Confirmar Cita</span>
+              <span>{loading ? 'Procesando...' : 'Confirmar Cita'}</span>
             </button>
           </form>
         </motion.div>
@@ -235,7 +210,7 @@ const Appointments = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             ¿Prefieres agendar por teléfono?
           </p>
-          <a 
+          <a
             href="tel:+50688202058"
             className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-semibold"
           >
