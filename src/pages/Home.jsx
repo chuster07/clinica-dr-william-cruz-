@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 
 const Home = () => {
+  const MotionDiv = motion.div;
   const features = [
     {
       icon: Calendar,
@@ -69,7 +70,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -98,9 +99,9 @@ const Home = () => {
                   <span>Consulta Virtual</span>
                 </Link>
               </div>
-            </motion.div>
+            </MotionDiv>
 
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -130,7 +131,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </MotionDiv>
           </div>
         </div>
       </section>
@@ -138,7 +139,7 @@ const Home = () => {
       {/* Features Section */}
       <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -150,11 +151,11 @@ const Home = () => {
             <p className="text-xl text-gray-600 dark:text-gray-400">
               Tecnología al servicio de tu salud
             </p>
-          </motion.div>
+          </MotionDiv>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <motion.div
+              <MotionDiv
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -171,7 +172,7 @@ const Home = () => {
                 <p className="text-gray-600 dark:text-gray-400">
                   {feature.description}
                 </p>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </div>
@@ -180,7 +181,7 @@ const Home = () => {
       {/* Services Section */}
       <section className="py-20 bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -192,11 +193,11 @@ const Home = () => {
             <p className="text-xl text-gray-600 dark:text-gray-400">
               Atención médica integral para toda la familia
             </p>
-          </motion.div>
+          </MotionDiv>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
-              <motion.div
+              <MotionDiv
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -208,7 +209,7 @@ const Home = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   {service.name}
                 </h3>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
 
@@ -227,7 +228,7 @@ const Home = () => {
       {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -239,11 +240,11 @@ const Home = () => {
             <p className="text-xl text-gray-600 dark:text-gray-400">
               Testimonios reales de personas que confían en nosotros
             </p>
-          </motion.div>
+          </MotionDiv>
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <motion.div
+              <MotionDiv
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -269,7 +270,7 @@ const Home = () => {
                 <p className="text-gray-600 dark:text-gray-400 italic">
                   "{testimonial.text}"
                 </p>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </div>
@@ -279,7 +280,7 @@ const Home = () => {
       <section className="py-20 text-white relative overflow-hidden" style={{ background: 'linear-gradient(90deg, #2c7873 0%, #6fb98f 50%, #4ade80 100%)' }}>
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -297,7 +298,7 @@ const Home = () => {
               <Calendar className="w-6 h-6" />
               <span>Agendar Cita Ahora</span>
             </Link>
-          </motion.div>
+          </MotionDiv>
         </div>
       </section>
     </div>

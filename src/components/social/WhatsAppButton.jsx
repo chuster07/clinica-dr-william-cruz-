@@ -2,6 +2,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const WhatsAppButton = () => {
+  const MotionButton = motion.button;
   const phoneNumber = '50688202058'; // Número de WhatsApp de la clínica
   const message = encodeURIComponent('Hola, me gustaría obtener más información sobre sus servicios médicos.');
   
@@ -10,7 +11,7 @@ const WhatsAppButton = () => {
   };
 
   return (
-    <motion.button
+    <MotionButton
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={handleClick}
@@ -18,7 +19,7 @@ const WhatsAppButton = () => {
       aria-label="Contactar por WhatsApp"
     >
       <MessageCircle className="w-7 h-7" fill="currentColor" />
-    </motion.button>
+    </MotionButton>
   );
 };
 

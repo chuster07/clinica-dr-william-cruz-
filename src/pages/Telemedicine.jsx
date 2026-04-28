@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 const Telemedicine = () => {
+  const MotionDiv = motion.div;
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   const doctors = [
@@ -23,7 +24,7 @@ const Telemedicine = () => {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
@@ -37,11 +38,11 @@ const Telemedicine = () => {
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Consulta médica profesional desde la comodidad de tu hogar
           </p>
-        </motion.div>
+        </MotionDiv>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Beneficios */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
@@ -65,10 +66,10 @@ const Telemedicine = () => {
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </MotionDiv>
 
           {/* Selección de Doctor */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -128,7 +129,7 @@ const Telemedicine = () => {
                 <span>Iniciar Videoconsulta</span>
               </button>
             </div>
-          </motion.div>
+          </MotionDiv>
         </div>
       </div>
     </div>

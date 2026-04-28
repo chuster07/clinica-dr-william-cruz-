@@ -18,20 +18,19 @@ import ChatWidget from './components/chat/ChatWidget';
 import WhatsAppButton from './components/social/WhatsAppButton';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem('darkMode');
+    return stored === null ? true : stored === 'true';
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Siempre activar modo oscuro por defecto
-    setDarkMode(true);
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('darkMode', 'true');
-  }, []);
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('darkMode', String(darkMode));
+  }, [darkMode]);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-    localStorage.setItem('darkMode', (!darkMode).toString());
+    setDarkMode((prev) => !prev);
   };
 
   return (

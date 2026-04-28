@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 const Contact = () => {
+  const MotionDiv = motion.div;
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
 
   const handleSubmit = (e) => {
@@ -15,7 +16,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
@@ -26,7 +27,7 @@ const Contact = () => {
           <p className="text-xl text-gray-600 dark:text-gray-400">
             Estamos aquí para ayudarte
           </p>
-        </motion.div>
+        </MotionDiv>
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
@@ -36,7 +37,7 @@ const Contact = () => {
               { icon: Mail, title: 'Email', text: 'info@clinicawilliamcruz.com' },
               { icon: Clock, title: 'Horario', text: 'Lun-Vie: 8:00 AM - 6:00 PM\nSáb: 9:00 AM - 2:00 PM' }
             ].map((item, index) => (
-              <motion.div
+              <MotionDiv
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -46,11 +47,11 @@ const Contact = () => {
                 <item.icon className="w-8 h-8 text-primary-600 mb-3" />
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
                 <p className="text-gray-600 dark:text-gray-400 whitespace-pre-line">{item.text}</p>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
 
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -101,7 +102,7 @@ const Contact = () => {
                 </button>
               </form>
             </div>
-          </motion.div>
+          </MotionDiv>
         </div>
       </div>
     </div>

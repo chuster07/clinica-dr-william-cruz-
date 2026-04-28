@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 const PatientPortal = ({ setIsAuthenticated }) => {
+  const MotionDiv = motion.div;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [credentials, setCredentials] = useState({ email: '', password: '' });
 
@@ -26,7 +27,7 @@ const PatientPortal = ({ setIsAuthenticated }) => {
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full mx-4"
@@ -84,7 +85,7 @@ const PatientPortal = ({ setIsAuthenticated }) => {
               </a>
             </div>
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
     );
   }
@@ -100,14 +101,14 @@ const PatientPortal = ({ setIsAuthenticated }) => {
     <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+          <MotionDiv initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Bienvenido, Paciente
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
               Gestiona tu información médica
             </p>
-          </motion.div>
+          </MotionDiv>
           <button
             onClick={handleLogout}
             className="flex items-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
@@ -119,7 +120,7 @@ const PatientPortal = ({ setIsAuthenticated }) => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {menuItems.map((item, index) => (
-            <motion.div
+            <MotionDiv
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -133,7 +134,7 @@ const PatientPortal = ({ setIsAuthenticated }) => {
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 {item.description}
               </p>
-            </motion.div>
+            </MotionDiv>
           ))}
         </div>
       </div>

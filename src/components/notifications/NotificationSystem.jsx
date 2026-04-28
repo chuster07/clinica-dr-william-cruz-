@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Bell, X, Calendar, MessageCircle, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NotificationSystem = () => {
+  const MotionDiv = motion.div;
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -68,7 +69,7 @@ const NotificationSystem = () => {
 
       <AnimatePresence>
         {showPanel && (
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -141,7 +142,7 @@ const NotificationSystem = () => {
                 })
               )}
             </div>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
     </div>

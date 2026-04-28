@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Calendar, DollarSign, TrendingUp, Activity } from 'lucide-react';
 
 const Dashboard = ({ isAuthenticated }) => {
+  const MotionDiv = motion.div;
   if (!isAuthenticated) {
     return <Navigate to="/portal-pacientes" replace />;
   }
@@ -17,18 +18,18 @@ const Dashboard = ({ isAuthenticated }) => {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Administrativo</h1>
           <p className="text-gray-600 dark:text-gray-400">Panel de control y estadísticas</p>
-        </motion.div>
+        </MotionDiv>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <motion.div
+            <MotionDiv
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -43,12 +44,12 @@ const Dashboard = ({ isAuthenticated }) => {
                 </div>
                 <stat.icon className={`w-12 h-12 text-${stat.color}-600`} />
               </div>
-            </motion.div>
+            </MotionDiv>
           ))}
         </div>
 
         {/* Sección de Actividad Reciente */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -85,7 +86,7 @@ const Dashboard = ({ isAuthenticated }) => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
     </div>
   );
