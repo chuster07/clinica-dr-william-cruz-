@@ -1,0 +1,196 @@
+{
+  "name": "04 - Formulario de Contacto Web",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contacto",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-contacto",
+      "name": "Webhook - Formulario Contacto",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "nombre",
+              "name": "nombre",
+              "value": "={{ $json.body.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "email",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "telefono",
+              "name": "telefono",
+              "value": "={{ $json.body.telefono }}",
+              "type": "string"
+            },
+            {
+              "id": "mensaje",
+              "name": "mensaje",
+              "value": "={{ $json.body.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "set-data",
+      "name": "Formatear Datos",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "AQUI_TU_SHEET_ID",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Contactos",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ $json.nombre }}",
+            "email": "={{ $json.email }}",
+            "telefono": "={{ $json.telefono }}",
+            "mensaje": "={{ $json.mensaje }}",
+            "fecha": "={{ $json.timestamp }}",
+            "atendido": "No"
+          }
+        }
+      },
+      "id": "save-sheets",
+      "name": "Guardar en Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        650,
+        200
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "sendTo": "={{ $json.email }}",
+        "subject": "Hemos recibido su mensaje - Clínica Dr. William Cruz",
+        "message": "=<h2>¡Hola {{ $json.nombre }}!</h2>\n\n<p>Gracias por contactarnos. Hemos recibido su mensaje y <strong>le responderemos en las próximas 24 horas</strong>.</p>\n\n<div style=\"background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 20px 0;\">\n  <h3>📝 Su mensaje:</h3>\n  <p style=\"font-style: italic; color: #555;\">{{ $json.mensaje }}</p>\n</div>\n\n<hr>\n\n<h3>📞 También puede contactarnos:</h3>\n<ul>\n  <li>☎️ Tel: 2770-3198 / 8313-3198</li>\n  <li>📧 Email: drwilliamcruzperez@gmail.com</li>\n  <li>🌐 Web: clinicadrwilliamcruz.com</li>\n</ul>\n\n<p><strong>Clínica Dr. William Cruz</strong><br>\nMedicina Macrobiótica y Fitoterapia<br>\nPérez Zeledón, Costa Rica</p>"
+      },
+      "id": "send-confirmation",
+      "name": "Email Auto-respuesta",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "chatId": "TU_CHAT_ID",
+        "text": "=📧 *NUEVO CONTACTO WEB*\n\n👤 *Nombre:* {{ $json.nombre }}\n📞 *Teléfono:* {{ $json.telefono }}\n📧 *Email:* {{ $json.email }}\n\n💬 *Mensaje:*\n{{ $json.mensaje }}\n\n⏱️ Recibido: {{ $json.timestamp }}\n\n✅ Auto-respuesta enviada",
+        "additionalFields": {
+          "parseMode": "Markdown"
+        }
+      },
+      "id": "notify-team",
+      "name": "Telegram - Notificar Equipo",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        650,
+        400
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"message\": \"Gracias por su mensaje. Le responderemos pronto.\", \"data\": { \"nombre\": \"{{ $json.nombre }}\", \"timestamp\": \"{{ $json.timestamp }}\" } }"
+      },
+      "id": "respond-webhook",
+      "name": "Responder al Cliente",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook - Formulario Contacto": {
+      "main": [
+        [
+          {
+            "node": "Formatear Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear Datos": {
+      "main": [
+        [
+          {
+            "node": "Guardar en Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Email Auto-respuesta",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram - Notificar Equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Auto-respuesta": {
+      "main": [
+        [
+          {
+            "node": "Responder al Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

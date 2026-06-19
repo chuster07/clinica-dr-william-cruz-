@@ -1,0 +1,248 @@
+{
+  "name": "04 - Formulario de Contacto (WhatsApp Cloud)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contacto",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-contacto",
+      "name": "Webhook - Formulario Contacto",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "nombre",
+              "name": "nombre",
+              "value": "={{ $json.body.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "email",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "telefono",
+              "name": "telefono",
+              "value": "={{ $json.body.telefono }}",
+              "type": "string"
+            },
+            {
+              "id": "mensaje",
+              "name": "mensaje",
+              "value": "={{ $json.body.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "set-data",
+      "name": "Formatear Datos",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatear teléfono para WhatsApp Cloud API\nlet telefono = $json.telefono.toString().replace(/[\\s\\-\\(\\)\\+]/g, '');\nif (!telefono.startsWith('506')) {\n  telefono = '506' + telefono;\n}\n\nconst mensaje = `¡Hola ${$json.nombre}! 👋\\n\\nGracias por contactar a la *Clínica Dr. William Cruz*.\\n\\nHemos recibido su mensaje y le responderemos lo antes posible.\\n\\n💬 *Su consulta:*\\n\"${$json.mensaje}\"\\n\\n📞 Tel: 2770-3198 / 8313-3198\\n🌐 clinicadrwilliamcruz.com`;\n\nreturn {\n  json: {\n    ...$json,\n    telefono_whatsapp: telefono,\n    mensaje_whatsapp: mensaje\n  }\n};"
+      },
+      "id": "format-whatsapp",
+      "name": "Preparar WhatsApp",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "AQUI_TU_SHEET_ID",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Contactos",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nombre": "={{ $json.nombre }}",
+            "email": "={{ $json.email }}",
+            "telefono": "={{ $json.telefono }}",
+            "mensaje": "={{ $json.mensaje }}",
+            "fecha": "={{ $json.timestamp }}",
+            "atendido": "No"
+          }
+        }
+      },
+      "id": "save-sheets",
+      "name": "Guardar en Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        850,
+        100
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "sendTo": "={{ $json.email }}",
+        "subject": "Hemos recibido su mensaje - Clínica Dr. William Cruz",
+        "message": "=<h2>¡Hola {{ $json.nombre }}!</h2><p>Gracias por contactarnos. Hemos recibido su mensaje y <strong>le responderemos en las próximas 24 horas</strong>.</p><div style=\"background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 20px 0;\"><h3>📝 Su mensaje:</h3><p style=\"font-style: italic; color: #555;\">{{ $json.mensaje }}</p></div><hr><h3>📞 También puede contactarnos:</h3><ul><li>☎️ Tel: 2770-3198 / 8313-3198</li><li>📧 Email: drwilliamcruzperez@gmail.com</li><li>🌐 Web: clinicadrwilliamcruz.com</li></ul><p><strong>Clínica Dr. William Cruz</strong><br>Medicina Macrobiótica y Fitoterapia</p>"
+      },
+      "id": "send-confirmation",
+      "name": "Email Auto-respuesta",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        850,
+        200
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "sendText",
+        "recipientPhoneNumber": "={{ $json.telefono_whatsapp }}",
+        "message": "={{ $json.mensaje_whatsapp }}"
+      },
+      "id": "whatsapp-confirm",
+      "name": "WhatsApp - Confirmación",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "TU_CREDENCIAL_ID",
+          "name": "WhatsApp Clinica"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "chatId": "TU_CHAT_ID",
+        "text": "=📧 *NUEVO CONTACTO WEB*\n\n👤 *Nombre:* {{ $json.nombre }}\n📞 *Teléfono:* {{ $json.telefono }}\n📧 *Email:* {{ $json.email }}\n\n💬 *Mensaje:*\n{{ $json.mensaje }}\n\n⏱️ Recibido: {{ $json.timestamp }}\n\n✅ Auto-respuesta enviada por Email y WhatsApp",
+        "additionalFields": {
+          "parseMode": "Markdown"
+        }
+      },
+      "id": "notify-team",
+      "name": "Telegram - Notificar Equipo",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [
+        850,
+        400
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"message\": \"Gracias por su mensaje. Le responderemos pronto.\", \"data\": { \"nombre\": \"{{ $json.nombre }}\", \"timestamp\": \"{{ $json.timestamp }}\" } }"
+      },
+      "id": "respond-webhook",
+      "name": "Responder al Cliente",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook - Formulario Contacto": {
+      "main": [
+        [
+          {
+            "node": "Formatear Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear Datos": {
+      "main": [
+        [
+          {
+            "node": "Preparar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Guardar en Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Email Auto-respuesta",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp - Confirmación",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram - Notificar Equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp - Confirmación": {
+      "main": [
+        [
+          {
+            "node": "Responder al Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

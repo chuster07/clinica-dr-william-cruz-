@@ -1,0 +1,180 @@
+{
+  "name": "03 - Recordatorios Automáticos (WhatsApp Cloud)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Ejecutar cada 6 horas",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "getAll",
+        "documentId": {
+          "__rl": true,
+          "value": "1Pnp6vGwPnKsaeqEbKCeLirHI6cUwbEe1TyXqNg3gZzs",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Citas",
+          "mode": "list"
+        },
+        "options": {
+          "filter": {
+            "where": "estado = 'Pendiente' OR estado = 'Confirmada'"
+          }
+        }
+      },
+      "id": "get-citas",
+      "name": "Obtener Citas Pendientes",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        450,
+        300
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst now = new Date();\nconst results = [];\n\nfor (const item of items) {\n  const citaDate = new Date(item.json.fecha + ' ' + item.json.hora);\n  const diffHours = (citaDate - now) / (1000 * 60 * 60);\n  \n  // Recordatorio 24 horas antes (entre 22 y 26 horas)\n  if (diffHours > 22 && diffHours <= 26) {\n    results.push({\n      json: {\n        ...item.json,\n        tipo_recordatorio: '24h',\n        diff_hours: diffHours\n      }\n    });\n  } \n  // Recordatorio 2 horas antes (entre 1 y 3 horas)\n  else if (diffHours > 1 && diffHours <= 3) {\n    results.push({\n      json: {\n        ...item.json,\n        tipo_recordatorio: '2h',\n        diff_hours: diffHours\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "id": "filter-citas",
+      "name": "Filtrar Citas para Recordar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatear número de teléfono para WhatsApp Cloud API\nconst item = $input.item.json;\nlet telefono = item.telefono;\n\n// Limpiar el número (remover espacios, guiones, paréntesis, +)\ntelefono = telefono.toString().replace(/[\\s\\-\\(\\)\\+]/g, '');\n\n// Agregar código de país si no lo tiene\nif (!telefono.startsWith('506')) {\n  telefono = '506' + telefono;\n}\n\n// Crear mensaje según tipo de recordatorio\nlet mensaje = '';\n\nif (item.tipo_recordatorio === '24h') {\n  mensaje = `⏰ *RECORDATORIO DE CITA*\\n\\nHola ${item.nombre},\\n\\nLe recordamos su cita *mañana* en la Clínica Dr. William Cruz:\\n\\n📅 *Fecha:* ${item.fecha}\\n⏰ *Hora:* ${item.hora}\\n💼 *Servicio:* ${item.servicio}\\n\\n📍 Pérez Zeledón, Costa Rica\\n📞 Dudas: 2770-3198 / 8313-3198\\n\\n¡Le esperamos! 🏥\\n\\n_Si necesita cancelar o reprogramar, por favor contáctenos._`;\n} else {\n  mensaje = `⏰⏰ *RECORDATORIO URGENTE*\\n\\nHola ${item.nombre},\\n\\n¡Su cita es *EN 2 HORAS*!\\n\\n📅 *Hoy a las:* ${item.hora}\\n💼 *Servicio:* ${item.servicio}\\n\\n📍 Clínica Dr. William Cruz\\nPérez Zeledón, Costa Rica\\n\\nNos vemos pronto! 🏥`;\n}\n\nreturn {\n  json: {\n    ...item,\n    telefono_whatsapp: telefono,\n    mensaje_whatsapp: mensaje\n  }\n};"
+      },
+      "id": "format-data",
+      "name": "Formatear Datos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "sendText",
+        "recipientPhoneNumber": "={{ $json.telefono_whatsapp }}",
+        "message": "={{ $json.mensaje_whatsapp }}"
+      },
+      "id": "send-whatsapp",
+      "name": "Enviar WhatsApp",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        200
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "TU_CREDENCIAL_ID",
+          "name": "WhatsApp Clinica"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "sendTo": "={{ $json.email }}",
+        "subject": "={{ $json.tipo_recordatorio === '24h' ? '⏰ Recordatorio: Cita Mañana' : '⏰ URGENTE: Cita en 2 horas' }}",
+        "message": "={{ $json.tipo_recordatorio === '24h' ? '<h2>Hola ' + $json.nombre + ',</h2><p>Le recordamos su cita <strong>mañana</strong> en la Clínica Dr. William Cruz.</p><div style=\"background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 20px 0;\"><h3>📋 Detalles de su Cita:</h3><ul style=\"list-style: none; padding: 0;\"><li>📅 <strong>Fecha:</strong> ' + $json.fecha + '</li><li>⏰ <strong>Hora:</strong> ' + $json.hora + '</li><li>💼 <strong>Servicio:</strong> ' + $json.servicio + '</li></ul></div><p>📍 <strong>Ubicación:</strong> Pérez Zeledón, Costa Rica</p><p>📞 <strong>Contacto:</strong> 2770-3198 / 8313-3198</p><hr><p style=\"color: #666; font-size: 12px;\">Si necesita cancelar o reprogramar su cita, por favor contáctenos con anticipación.</p>' : '<h2 style=\"color: #dc2626;\">⏰ RECORDATORIO URGENTE</h2><p>Hola ' + $json.nombre + ',</p><p style=\"font-size: 18px;\"><strong>¡Su cita es en 2 HORAS!</strong></p><div style=\"background: #fef2f2; padding: 20px; border-left: 4px solid #dc2626; margin: 20px 0;\"><h3>📋 Detalles:</h3><ul style=\"list-style: none; padding: 0;\"><li>⏰ <strong>Hora:</strong> ' + $json.hora + '</li><li>💼 <strong>Servicio:</strong> ' + $json.servicio + '</li></ul></div><p>📍 Clínica Dr. William Cruz<br>Pérez Zeledón, Costa Rica</p><p>¡Nos vemos pronto! 🏥</p>' }}"
+      },
+      "id": "send-email",
+      "name": "Enviar Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        400
+      ],
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "Ejecutar cada 6 horas": {
+      "main": [
+        [
+          {
+            "node": "Obtener Citas Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Citas Pendientes": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Citas para Recordar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Citas para Recordar": {
+      "main": [
+        [
+          {
+            "node": "Formatear Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear Datos": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-19T00:00:00.000Z",
+  "versionId": "1"
+}

@@ -1,0 +1,24 @@
+RESUMEN DE CAMBIOS DETECTADOS EN /home/ubuntu/clinica-project
+
+Estado actual (git status --short):
+
+- ?? .abacus.donotdelete
+- ?? COMANDOS_PARA_COPIAR.txt
+- ?? CORRECCIONES_FINALES.docx
+- ?? CORRECCIONES_FINALES.pdf
+- ?? INSTRUCCIONES_DEPLOY.docx
+- ?? INSTRUCCIONES_DEPLOY.pdf
+- ?? MEJORAS_IMPLEMENTADAS.docx
+- ?? MEJORAS_IMPLEMENTADAS.pdf
+- ?? REPORTE_TECNICO_ANALISIS.docx
+- ?? REPORTE_TECNICO_ANALISIS.md
+- ?? REPORTE_TECNICO_ANALISIS.pdf
+- ?? REPORTE_VALIDACION.docx
+- ?? REPORTE_VALIDACION.pdf
+
+Leyenda:
+- "??" = archivo nuevo/no versionado todavía.
+
+Nota:
+- No se detectaron archivos modificados ya versionados (M) en este estado.
+- El push remoto desde esta VM falló por autenticación de GitHub, por eso se preparó COMANDOS_PARA_COPIAR.txt para ejecutar en tu máquina local.

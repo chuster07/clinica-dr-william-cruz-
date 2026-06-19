@@ -1,0 +1,221 @@
+{
+  "name": "05 - Seguimiento Post-Consulta",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "daily-trigger",
+      "name": "Ejecutar Diario 9 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "getAll",
+        "documentId": {
+          "__rl": true,
+          "value": "1Pnp6vGwPnKsaeqEbKCeLirHI6cUwbEe1TyXqNg3gZzs",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Citas",
+          "mode": "list"
+        },
+        "options": {
+          "filter": {
+            "where": "estado = 'Completada'"
+          }
+        }
+      },
+      "id": "get-completed",
+      "name": "Obtener Citas Completadas",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        450,
+        300
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst now = new Date();\nconst results = [];\n\nfor (const item of items) {\n  const citaDate = new Date(item.json.fecha);\n  const diffDays = Math.floor((now - citaDate) / (1000 * 60 * 60 * 24));\n  \n  // Seguimiento 24h después\n  if (diffDays === 1 && !item.json.seguimiento_24h) {\n    results.push({\n      ...item.json,\n      tipo_seguimiento: '24h',\n      dias_transcurridos: diffDays\n    });\n  }\n  // Check-in 7 días\n  else if (diffDays === 7 && !item.json.seguimiento_7d) {\n    results.push({\n      ...item.json,\n      tipo_seguimiento: '7d',\n      dias_transcurridos: diffDays\n    });\n  }\n  // Reactivación 30 días\n  else if (diffDays === 30 && !item.json.seguimiento_30d) {\n    results.push({\n      ...item.json,\n      tipo_seguimiento: '30d',\n      dias_transcurridos: diffDays\n    });\n  }\n}\n\nreturn results.map(r => ({ json: r }));"
+      },
+      "id": "filter-followup",
+      "name": "Filtrar Seguimientos Pendientes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "id": "seguimiento_24h",
+              "leftValue": "={{ $json.tipo_seguimiento }}",
+              "rightValue": "24h",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "switch-type",
+      "name": "Tipo de Seguimiento",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "sendTo": "={{ $json.email }}",
+        "subject": "¿Cómo se siente? - Clínica Dr. William Cruz",
+        "message": "=<h2>Hola {{ $json.nombre }},</h2>\n\n<p>Esperamos que se encuentre <strong>muy bien</strong> después de su consulta de ayer.</p>\n\n<div style=\"background: #f0f9ff; padding: 20px; border-radius: 10px;\">\n  <h3>💚 Seguimiento Post-Consulta</h3>\n  <p>¿Cómo ha evolucionado desde su visita?</p>\n  <p>Recordatorio de las indicaciones:</p>\n  <ul>\n    <li>Siga las recomendaciones proporcionadas</li>\n    <li>Mantenga la alimentación sugerida</li>\n    <li>No olvide tomar sus productos naturales</li>\n  </ul>\n</div>\n\n<p><a href=\"https://forms.gle/AQUI_TU_FORM\" style=\"background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0;\">📝 Responder Encuesta de Satisfacción</a></p>\n\n<p>Si tiene dudas o inquietudes, contáctenos:<br>\n📞 2770-3198 / 8313-3198<br>\n📧 drwilliamcruzperez@gmail.com</p>\n\n<p><strong>Dr. William Cruz</strong><br>\nClínica de Medicina Natural</p>"
+      },
+      "id": "email-24h",
+      "name": "Email - Seguimiento 24h",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        200
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://evolution-api:8080/message/sendText/clinica-whatsapp",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ '506' + $json.telefono }}"
+            },
+            {
+              "name": "text",
+              "value": "=Hola {{ $json.nombre }} 👋\n\n¿Cómo se siente después de su consulta?\n\nEsperamos que esté siguiendo las indicaciones y sintiéndose mejor cada día 💚\n\nSi tiene dudas, estamos aquí para ayudarle.\n\n📞 2770-3198\n\nClínica Dr. William Cruz 🏥"
+            }
+          ]
+        }
+      },
+      "id": "whatsapp-7d",
+      "name": "WhatsApp - Check-in 7 días",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1050,
+        300
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "sendTo": "={{ $json.email }}",
+        "subject": "¡Le extrañamos! - Clínica Dr. William Cruz",
+        "message": "=<h2>Hola {{ $json.nombre }},</h2>\n\n<p>Han pasado 30 días desde su última consulta y <strong>nos gustaría saber de usted</strong>.</p>\n\n<div style=\"background: #fff3cd; padding: 20px; border-radius: 10px; border-left: 4px solid #ff9800;\">\n  <h3>🌿 ¿Cómo va su proceso?</h3>\n  <p>La medicina natural requiere seguimiento constante para resultados óptimos.</p>\n</div>\n\n<p><strong>¿Le gustaría agendar una consulta de seguimiento?</strong></p>\n\n<p><a href=\"https://clinicadrwilliamcruz.com/citas.html\" style=\"background: #2196F3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0;\">📅 Agendar Cita</a></p>\n\n<p>O contáctenos directamente:<br>\n📞 2770-3198 / 8313-3198<br>\n💬 WhatsApp disponible</p>\n\n<p><strong>¡Estamos aquí para ayudarle! 💚</strong></p>\n\n<p>Dr. William Cruz<br>\nClínica de Medicina Natural</p>"
+      },
+      "id": "email-30d",
+      "name": "Email - Reactivación 30 días",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        1050,
+        400
+      ],
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "Ejecutar Diario 9 AM": {
+      "main": [
+        [
+          {
+            "node": "Obtener Citas Completadas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Citas Completadas": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Seguimientos Pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Seguimientos Pendientes": {
+      "main": [
+        [
+          {
+            "node": "Tipo de Seguimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tipo de Seguimiento": {
+      "main": [
+        [
+          {
+            "node": "Email - Seguimiento 24h",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WhatsApp - Check-in 7 días",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email - Reactivación 30 días",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Formulario de Contacto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .config-section h3 {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .url-input {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test - Formulario de Contacto</h1>
+        <p class="subtitle">Prueba tu workflow de n8n antes de integrarlo</p>
+
+        <!-- Configuración del Webhook -->
+        <div class="config-section">
+            <h3>⚙️ Configuración del Webhook</h3>
+            <div class="form-group">
+                <label for="webhookUrl">URL del Webhook N8N <span class="required">*</span></label>
+                <input 
+                    type="url" 
+                    id="webhookUrl" 
+                    class="url-input"
+                    placeholder="http://localhost:5678/webhook/contacto"
+                    value="http://localhost:5678/webhook/contacto"
+                >
+                <small style="color: #666; font-size: 12px;">
+                    💡 Copia la URL del nodo Webhook en n8n
+                </small>
+            </div>
+        </div>
+
+        <!-- Formulario de Prueba -->
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    name="nombre"
+                    placeholder="Juan Pérez"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    placeholder="juan@ejemplo.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono <span class="required">*</span></label>
+                <input 
+                    type="tel" 
+                    id="telefono" 
+                    name="telefono"
+                    placeholder="+506 8888-8888"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="mensaje">Mensaje <span class="required">*</span></label>
+                <textarea 
+                    id="mensaje" 
+                    name="mensaje"
+                    placeholder="Escribe tu mensaje aquí..."
+                    required
+                ></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                📤 Enviar Prueba
+            </button>
+        </form>
+
+        <!-- Área de estado -->
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const statusDiv = document.getElementById('status');
+        const submitBtn = document.getElementById('submitBtn');
+        const webhookUrlInput = document.getElementById('webhookUrl');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validar URL del webhook
+            const webhookUrl = webhookUrlInput.value.trim();
+            if (!webhookUrl) {
+                showStatus('error', '❌ Por favor configura la URL del webhook');
+                return;
+            }
+
+            // Obtener datos del formulario
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                mensaje: document.getElementById('mensaje').value
+            };
+
+            console.log('📤 Enviando datos:', formData);
+            console.log('🔗 URL:', webhookUrl);
+
+            // Mostrar loading
+            showStatus('loading', '⏳ Enviando datos al workflow...');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Enviando...';
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                console.log('📥 Respuesta HTTP:', response.status);
+                
+                let result;
+                const contentType = response.headers.get('content-type');
+                
+                if (contentType && contentType.includes('application/json')) {
+                    result = await response.json();
+                    console.log('📦 Respuesta JSON:', result);
+                } else {
+                    const text = await response.text();
+                    console.log('📄 Respuesta Texto:', text);
+                    result = { message: text };
+                }
+
+                if (response.ok) {
+                    showStatus('success', 
+                        `✅ ¡Éxito! ${result.message || 'Formulario enviado correctamente'}\n\n` +
+                        `📊 Verifica:\n` +
+                        `• Google Sheets (pestaña Contactos)\n` +
+                        `• Email de confirmación\n` +
+                        `• Notificación en Telegram\n` +
+                        `• Executions en n8n`
+                    );
+                    form.reset();
+                } else {
+                    throw new Error(result.message || `Error HTTP: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showStatus('error', 
+                    `❌ Error al enviar:\n${error.message}\n\n` +
+                    `💡 Verifica:\n` +
+                    `• Que n8n esté corriendo (http://localhost:5678)\n` +
+                    `• Que el workflow esté ACTIVADO\n` +
+                    `• Que la URL del webhook sea correcta\n` +
+                    `• Los logs de n8n (docker logs n8n)`
+                );
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 Enviar Prueba';
+            }
+        });
+
+        function showStatus(type, message) {
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.whiteSpace = 'pre-line';
+        }
+
+        // Auto-guardar URL del webhook
+        webhookUrlInput.addEventListener('change', () => {
+            localStorage.setItem('n8n_webhook_url', webhookUrlInput.value);
+        });
+
+        // Cargar URL guardada
+        const savedUrl = localStorage.getItem('n8n_webhook_url');
+        if (savedUrl) {
+            webhookUrlInput.value = savedUrl;
+        }
+    </script>
+</body>
+</html>

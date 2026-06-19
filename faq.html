@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Preguntas frecuentes sobre la Clínica Hahnemann y el Dr. William Cruz Umaña: citas, consulta virtual, exámenes, pagos, privacidad y seguimiento." />
+    <title>Preguntas Frecuentes (FAQ) | Clínica Dr. William Cruz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        /* ---------- Hero ---------- */
+        .faq-hero {
+            background: linear-gradient(rgba(0, 0, 0, .72), rgba(0, 0, 0, .72)), url('https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            color: #fff;
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .faq-hero h1 {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            margin-bottom: .75rem;
+            font-weight: 800;
+        }
+
+        .faq-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            opacity: .95;
+        }
+
+        /* ---------- Container & Card ---------- */
+        .faq-section {
+            padding: 4rem 0;
+            background: var(--bg-main);
+        }
+
+        .faq-container {
+            max-width: 1020px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+        }
+
+        .faq-inner {
+            padding: 0.5rem 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ---------- Question / Answer ---------- */
+        .faq-question {
+            width: 100%;
+            border: none;
+            background: #fff;
+            text-align: left;
+            padding: 1rem 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 105, 92, .03);
+        }
+
+        .faq-question i {
+            color: var(--color-primary);
+            transition: transform .25s ease;
+            font-size: 0.95rem;
+        }
+
+        .faq-question[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            transition: max-height .28s ease, padding-bottom .28s ease;
+        }
+
+        .faq-answer.open {
+            padding-bottom: 1.25rem;
+        }
+
+        /* ensure long content is visible */
+        .faq-answer p {
+            margin: 0.75rem 0 0;
+        }
+
+        /* Help box under the list */
+        .faq-help {
+            max-width: 1020px;
+            margin: 1.5rem auto 0;
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 1.25rem;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .faq-help h3 {
+            color: var(--color-primary);
+            margin-bottom: .5rem;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 0.9rem 1rem;
+            }
+
+            .faq-answer {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo"><i class="fas fa-stethoscope"></i> Clínica Dr. William Cruz</div>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="index.html#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                    <li><a href="index.html#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="faq.html" class="nav-link active">FAQ</a></li>
+                    <li><a href="citas.html" class="nav-link">Citas</a></li>
+                    <li><a href="index.html#contacto" class="nav-link">Contacto</a></li>
+                    <li><a href="tel:+50627703198" class="nav-link phone"><i class="fas fa-phone"></i> <span>2770-3198</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="faq-hero">
+        <div class="container">
+            <h1>Preguntas Frecuentes</h1>
+            <p>Resolvemos las consultas más comunes sobre atención médica, preparación para su cita y servicios de la
+                clínica.</p>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-container">
+                <div class="faq-inner">
+                    <!-- FAQ items -->
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq1">
+                            ¿Qué tipo de medicina practica la clínica?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq1" class="faq-answer" role="region" aria-labelledby="">
+                            <p>Trabajamos con un enfoque de medicina integrativa: combinamos medicina convencional basada en
+                                evidencia con apoyo nutricional, fitoterapia y hábitos terapéuticos personalizados.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq2">
+                            ¿Cómo solicito una cita?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq2" class="faq-answer" role="region">
+                            <p>Puede agendar en línea desde la página de <a href="citas.html">citas</a>, por teléfono al
+                                <a href="tel:+50627703198">2770-3198</a> o por WhatsApp en
+                                <a href="https://wa.me/50688202058" target="_blank" rel="noopener">+506 8820-2058</a>.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq3">
+                            ¿Ofrecen consulta virtual?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq3" class="faq-answer" role="region">
+                            <p>Sí. Ofrecemos videoconsultas para primera valoración y seguimiento, según su condición clínica y
+                                criterio médico.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq4">
+                            ¿Cuánto dura una consulta?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq4" class="faq-answer" role="region">
+                            <p>La primera consulta suele durar entre 60 y 75 minutos. Las consultas de seguimiento duran, por
+                                lo general, entre 30 y 45 minutos.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq5">
+                            ¿Qué debo llevar a mi primera cita?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq5" class="faq-answer" role="region">
+                            <p>Le recomendamos traer exámenes recientes, lista de medicamentos, antecedentes médicos
+                                relevantes y llegar al menos 15 minutos antes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq6">
+                            ¿Puedo cambiar o cancelar mi cita?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq6" class="faq-answer" role="region">
+                            <p>Sí. Puede solicitar cambios por teléfono o WhatsApp. Para facilitar la reasignación de
+                                espacios, intente avisar con anticipación.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq7">
+                            ¿Atienden pacientes pediátricos o adultos mayores?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq7" class="faq-answer" role="region">
+                            <p>Atendemos personas adultas y adolescentes según valoración. En casos especiales, se brinda
+                                orientación para referencia al especialista adecuado.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq8">
+                            ¿Trabajan con seguros médicos?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq8" class="faq-answer" role="region">
+                            <p>No gestionamos directamente pólizas, pero emitimos factura y documentos necesarios para que
+                                usted tramite su reembolso con la aseguradora.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq9">
+                            ¿Cómo protegen mis datos personales y de salud?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq9" class="faq-answer" role="region">
+                            <p>Aplicamos medidas de seguridad técnicas y administrativas. El tratamiento de sus datos se
+                                realiza conforme a la Ley 8968 de Costa Rica y principios GDPR cuando resulte aplicable. Más
+                                información en nuestra <a href="privacidad.html">Política de Privacidad</a>.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq10">
+                            ¿Qué métodos de pago aceptan?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div id="faq10" class="faq-answer" role="region">
+                            <p>Aceptamos efectivo y tarjetas. Si necesita comprobante para empresa o seguro, indíquelo al
+                                momento de su atención.</p>
+                        </div>

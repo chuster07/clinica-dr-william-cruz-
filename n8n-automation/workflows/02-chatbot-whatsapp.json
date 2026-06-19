@@ -1,0 +1,509 @@
+{
+  "name": "02 - Chatbot WhatsApp con OpenAI",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-whatsapp",
+      "name": "Webhook - Mensajes WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "whatsapp-messages"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.event }}",
+              "operation": "equals",
+              "value2": "messages.upsert"
+            },
+            {
+              "value1": "={{ $json.body.data.key.fromMe }}",
+              "operation": "equals",
+              "value2": "false"
+            }
+          ]
+        }
+      },
+      "id": "filter-incoming",
+      "name": "Filtrar Solo Mensajes Entrantes",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "telefono",
+              "value": "={{ $json.body.data.key.remoteJid.split('@')[0] }}"
+            },
+            {
+              "name": "mensaje",
+              "value": "={{ $json.body.data.message.conversation || $json.body.data.message.extendedTextMessage?.text }}"
+            },
+            {
+              "name": "nombre_contacto",
+              "value": "={{ $json.body.data.pushName || 'Cliente' }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "id": "extract-data",
+      "name": "Extraer Datos del Mensaje",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "options": {},
+        "rules": {
+          "rules": [
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.mensaje.toLowerCase() }}",
+                    "operation": "regex",
+                    "value2": "(cita|agendar|reservar|turno)"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "agendar_cita"
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.mensaje.toLowerCase() }}",
+                    "operation": "regex",
+                    "value2": "(servicio|precio|costo|tratamiento)"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "info_servicios"
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.mensaje.toLowerCase() }}",
+                    "operation": "regex",
+                    "value2": "(horario|hora|disponible|cuando)"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "horarios"
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.mensaje.toLowerCase() }}",
+                    "operation": "regex",
+                    "value2": "(ubicacion|direccion|donde|mapa)"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "ubicacion"
+            }
+          ]
+        }
+      },
+      "id": "check-intent",
+      "name": "Detectar Intención",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Eres un asistente virtual de la Clínica Dr. William Cruz, especializada en medicina macrobiótica, fitoterapia y medicina natural.\n\nServicios que ofrecemos:\n- Macrobiótica\n- Fitoterapia\n- Terapias naturales\n- Iridología\n- Consultas personalizadas\n\nHorarios:\n- Lunes a Viernes: 8:00 AM - 5:00 PM\n- Sábados: 8:00 AM - 12:00 PM\n\nUbicación: Pérez Zeledón, Costa Rica\nTeléfono: 2770-3198 / 8313-3198\nEmail: drwilliamcruzperez@gmail.com\n\nSé amable, profesional y conciso. Si el paciente quiere agendar una cita, pide: nombre, servicio de interés y fecha preferida."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.mensaje }}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 200
+        }
+      },
+      "id": "openai-chat",
+      "name": "OpenAI - Respuesta Inteligente",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        500
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "5",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "respuesta",
+              "name": "respuesta",
+              "type": "string",
+              "value": "=Para agendar su cita, por favor proporcióneme:\n\n1️⃣ Su nombre completo\n2️⃣ Servicio de interés (Macrobiótica, Fitoterapia, etc.)\n3️⃣ Fecha y hora preferida\n\nO puede agendar directamente en nuestra web:\n🌐 https://clinicadrwilliamcruz.com/citas.html\n\n📞 También puede llamar al: 2770-3198"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "response-agendar",
+      "name": "Respuesta: Agendar Cita",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1050,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "respuesta",
+              "name": "respuesta",
+              "type": "string",
+              "value": "=🏥 *Nuestros Servicios:*\n\n🌱 *Macrobiótica*\nAlimentación equilibrada y filosofía de vida saludable\n\n🌿 *Fitoterapia*\nTratamientos con plantas medicinales\n\n💆 *Terapias Naturales*\nMétodos holísticos para el bienestar\n\n👁️ *Iridología*\nDiagnóstico a través del iris\n\n📞 Para más información o agendar:\n2770-3198 / 8313-3198\n\n🌐 Visite: clinicadrwilliamcruz.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "response-servicios",
+      "name": "Respuesta: Servicios",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1050,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "respuesta",
+              "name": "respuesta",
+              "type": "string",
+              "value": "=⏰ *Horarios de Atención:*\n\n📅 *Lunes a Viernes*\n8:00 AM - 5:00 PM\n\n📅 *Sábados*\n8:00 AM - 12:00 PM\n\n❌ *Domingos*\nCerrado\n\n💡 *Recomendación:*\nEs mejor agendar con anticipación para garantizar su cita.\n\n📞 Llame al: 2770-3198\n🌐 O agende en línea: clinicadrwilliamcruz.com/citas.html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "response-horarios",
+      "name": "Respuesta: Horarios",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1050,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "respuesta",
+              "name": "respuesta",
+              "type": "string",
+              "value": "=📍 *Ubicación:*\n\nClínica Dr. William Cruz\nPérez Zeledón, Costa Rica\n\n📞 *Contacto:*\nTel: 2770-3198 / 8313-3198\nEmail: drwilliamcruzperez@gmail.com\n\n🌐 *Web:*\nclinicadrwilliamcruz.com\n\n🗺️ Ver en Google Maps:\n[Próximamente enlace directo]\n\n¿Desea agendar una cita?"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "response-ubicacion",
+      "name": "Respuesta: Ubicación",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1050,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://evolution-api:8080/message/sendText/clinica-whatsapp",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Extraer Datos del Mensaje').item.json.telefono }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.respuesta || $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-response",
+      "name": "Enviar Respuesta por WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1250,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "2",
+          "name": "Evolution API"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "AQUI_TU_SHEET_ID",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Conversaciones",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "telefono": "={{ $('Extraer Datos del Mensaje').item.json.telefono }}",
+            "nombre": "={{ $('Extraer Datos del Mensaje').item.json.nombre_contacto }}",
+            "mensaje": "={{ $('Extraer Datos del Mensaje').item.json.mensaje }}",
+            "respuesta": "={{ $json.respuesta || $json.message.content }}",
+            "timestamp": "={{ $('Extraer Datos del Mensaje').item.json.timestamp }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "log-conversation",
+      "name": "Registrar Conversación",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1450,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1",
+          "name": "Google Sheets OAuth2"
+        }
+      },
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "Webhook - Mensajes WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Solo Mensajes Entrantes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Solo Mensajes Entrantes": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos del Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos del Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Detectar Intención",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Intención": {
+      "main": [
+        [
+          {
+            "node": "Respuesta: Servicios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respuesta: Agendar Cita",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respuesta: Horarios",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respuesta: Ubicación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI - Respuesta Inteligente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respuesta: Servicios": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta por WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respuesta: Agendar Cita": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta por WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respuesta: Horarios": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta por WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respuesta: Ubicación": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta por WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Respuesta Inteligente": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta por WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Respuesta por WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Registrar Conversación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-19T00:00:00.000Z",
+  "versionId": "1"
+}

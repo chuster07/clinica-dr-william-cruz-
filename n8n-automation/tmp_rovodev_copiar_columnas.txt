@@ -1,0 +1,21 @@
+=== COLUMNAS PARA COPIAR Y PEGAR ===
+
+HOJA 1: Citas
+--------------
+ID	Nombre	Apellido	Telefono	Email	Fecha	Hora	Servicio	Estado	Notas	seguimiento_24h	seguimiento_7d	seguimiento_30d
+
+
+HOJA 2: Contactos
+-----------------
+ID	Nombre	Email	Telefono	Mensaje	Fecha	Atendido
+
+
+HOJA 3: Conversaciones
+----------------------
+Telefono	Nombre	Mensaje	Respuesta	Timestamp
+
+
+INSTRUCCIONES:
+1. Copia la línea de columnas de cada hoja
+2. Pégala en la fila 1 de cada hoja en Google Sheets
+3. Las columnas deben quedar separadas en celdas diferentes

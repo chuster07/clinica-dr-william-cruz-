@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Sistema de Citas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #11998e;
+        }
+
+        .config-section h3 {
+            color: #11998e;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #11998e;
+            box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .url-input {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Test - Sistema de Citas</h1>
+        <p class="subtitle">Prueba el workflow de agendamiento de citas</p>
+
+        <!-- Configuración del Webhook -->
+        <div class="config-section">
+            <h3>⚙️ Configuración del Webhook</h3>
+            <div class="form-group">
+                <label for="webhookUrl">URL del Webhook N8N <span class="required">*</span></label>
+                <input 
+                    type="url" 
+                    id="webhookUrl" 
+                    class="url-input"
+                    placeholder="http://localhost:5678/webhook/api/citas"
+                    value="http://localhost:5678/webhook/api/citas"
+                >
+                <small style="color: #666; font-size: 12px;">
+                    💡 Copia la URL del webhook del workflow "01-sistema-citas"
+                </small>
+            </div>
+        </div>
+
+        <!-- Formulario de Prueba -->
+        <form id="citaForm">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="nombre" 
+                    placeholder="María González"
+                    required
+                >
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="maria@ejemplo.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono <span class="required">*</span></label>
+                    <input 
+                        type="tel" 
+                        id="telefono" 
+                        placeholder="+506 8888-8888"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fecha">Fecha de la Cita <span class="required">*</span></label>
+                    <input 
+                        type="date" 
+                        id="fecha"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="hora">Hora <span class="required">*</span></label>
+                    <select id="hora" required>
+                        <option value="">Seleccionar hora</option>
+                        <option value="08:00">08:00 AM</option>
+                        <option value="08:30">08:30 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="09:30">09:30 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="10:30">10:30 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="11:30">11:30 AM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="13:30">01:30 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="14:30">02:30 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="15:30">03:30 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="16:30">04:30 PM</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="motivo">Motivo de la Consulta</label>
+                <textarea 
+                    id="motivo" 
+                    placeholder="Describe brevemente el motivo de tu consulta..."
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                📅 Agendar Cita de Prueba
+            </button>
+        </form>
+
+        <!-- Área de estado -->
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('citaForm');
+        const statusDiv = document.getElementById('status');
+        const submitBtn = document.getElementById('submitBtn');
+        const webhookUrlInput = document.getElementById('webhookUrl');
+        const fechaInput = document.getElementById('fecha');
+
+        // Establecer fecha mínima (hoy)
+        const today = new Date().toISOString().split('T')[0];
+        fechaInput.min = today;
+        
+        // Establecer fecha por defecto (mañana)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        fechaInput.value = tomorrow.toISOString().split('T')[0];
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validar URL del webhook
+            const webhookUrl = webhookUrlInput.value.trim();
+            if (!webhookUrl) {
+                showStatus('error', '❌ Por favor configura la URL del webhook');
+                return;
+            }
+
+            // Obtener datos del formulario
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                fecha: document.getElementById('fecha').value,
+                hora: document.getElementById('hora').value,
+                motivo: document.getElementById('motivo').value || 'Consulta general'
+            };
+
+            console.log('📤 Enviando datos:', formData);
+            console.log('🔗 URL:', webhookUrl);
+
+            // Mostrar loading
+            showStatus('loading', '⏳ Agendando cita en el sistema...');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Procesando...';
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                console.log('📥 Respuesta HTTP:', response.status);
+                
+                let result;
+                const contentType = response.headers.get('content-type');
+                
+                if (contentType && contentType.includes('application/json')) {
+                    result = await response.json();
+                    console.log('📦 Respuesta JSON:', result);
+                } else {
+                    const text = await response.text();
+                    console.log('📄 Respuesta Texto:', text);
+                    result = { message: text };
+                }
+
+                if (response.ok) {
+                    showStatus('success', 
+                        `✅ ¡Cita agendada exitosamente!\n\n` +
+                        `👤 Paciente: ${formData.nombre}\n` +
+                        `📅 Fecha: ${formatDate(formData.fecha)}\n` +
+                        `🕐 Hora: ${formData.hora}\n\n` +
+                        `📊 Verifica que se haya creado:\n` +
+                        `• Registro en Google Sheets (pestaña Citas)\n` +
+                        `• Evento en Google Calendar\n` +
+                        `• Email de confirmación enviado\n` +
+                        `• Mensaje de WhatsApp enviado\n` +
+                        `• Notificación en Telegram\n\n` +
+                        `🔍 Revisa "Executions" en n8n`
+                    );
+                    form.reset();
+                    fechaInput.value = tomorrow.toISOString().split('T')[0];
+                } else {
+                    throw new Error(result.message || `Error HTTP: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showStatus('error', 
+                    `❌ Error al agendar la cita:\n${error.message}\n\n` +
+                    `💡 Pasos para verificar:\n` +
+                    `1. ¿N8N está corriendo? → http://localhost:5678\n` +
+                    `2. ¿El workflow está ACTIVADO? (switch arriba)\n` +
+                    `3. ¿Las credenciales están configuradas?\n` +
+                    `   - Google Sheets OAuth2\n` +
+                    `   - Google Calendar OAuth2\n` +
+                    `   - Gmail OAuth2\n` +
+                    `   - Evolution API / WhatsApp\n` +
+                    `4. Revisa los logs: docker logs n8n\n` +
+                    `5. Prueba el webhook manualmente en n8n`
+                );
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📅 Agendar Cita de Prueba';
+            }
+        });
+
+        function showStatus(type, message) {
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.whiteSpace = 'pre-line';
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString + 'T00:00:00');
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('es-ES', options);
+        }
+
+        // Auto-guardar URL del webhook
+        webhookUrlInput.addEventListener('change', () => {
+            localStorage.setItem('n8n_cita_webhook_url', webhookUrlInput.value);
+        });
+
+        // Cargar URL guardada
+        const savedUrl = localStorage.getItem('n8n_cita_webhook_url');
+        if (savedUrl) {
+            webhookUrlInput.value = savedUrl;
+        }
+    </script>
+</body>
+</html>
