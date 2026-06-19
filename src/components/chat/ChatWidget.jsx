@@ -10,7 +10,7 @@ const MotionDiv = motion.div;
 
 const INITIAL_MESSAGE = {
     id: 1,
-    text: 'Hola 👋 Soy Valeria, asistente virtual de la Clínica Dr. William Cruz.\n\nPuedo ayudarte con:\n🏥 Información médica y servicios\n👨‍⚕️ Especialidades y consultas\n📅 Agendar citas\n📍 Ubicación y horarios\n💬 Preguntas frecuentes\n\n¿En qué puedo ayudarte hoy?',
+    text: '¡Hola! Soy Valeria, recepcionista virtual de la Clínica Dr. William Cruz 👩‍⚕️\n\n¿En qué puedo ayudarte hoy?',
     sender: 'bot',
     time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
 };
@@ -90,7 +90,7 @@ const ChatWidget = () => {
                 }
             }
         } catch (error) {
-            console.error('Chat AI error:', error);
+            console.error('Chat AI error:', error.message);
             addMessage('Lo siento, tuve un problema técnico. Por favor llámanos al +506 8820-2058 o intenta de nuevo.', 'bot');
         } finally {
             setIsLoading(false);
