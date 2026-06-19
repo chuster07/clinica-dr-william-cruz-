@@ -1,4 +1,5 @@
 import { Calendar as CalendarIcon, Clock, User, Phone, Mail, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useAppointments } from '../hooks/useAppointments';
 
 /**
