@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const WhatsAppButton = () => {
   const MotionButton = motion.button;
-  const phoneNumber = '50688202058'; // Número de WhatsApp de la clínica
+  const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '50688202058';
   const message = encodeURIComponent('Hola, me gustaría obtener más información sobre sus servicios médicos.');
   
   const handleClick = () => {

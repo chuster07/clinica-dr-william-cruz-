@@ -9,7 +9,7 @@ import BaseApiService from '../core/BaseApiService';
 class AppointmentService extends BaseApiService {
     constructor() {
         super({
-            baseUrl: 'https://c19-ef2.aiagent777.co', // URL Base del n8n Cloud
+            baseUrl: import.meta.env.VITE_API_BASE_URL || 'https://c19-ef2.aiagent777.co',
             timeout: 20000,
             maxRetries: 3
         });
