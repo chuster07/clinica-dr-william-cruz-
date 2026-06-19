@@ -3,6 +3,8 @@ import { MessageCircle, X, Send, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ChatWidget = () => {
+  const MotionButton = motion.button;
+  const MotionDiv = motion.div;
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -87,7 +89,7 @@ const ChatWidget = () => {
   return (
     <>
       {/* Botón flotante */}
-      <motion.button
+      <MotionButton
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
@@ -95,12 +97,12 @@ const ChatWidget = () => {
         style={{background: 'linear-gradient(135deg, #2c7873 0%, #6fb98f 100%)', boxShadow: '0 10px 30px rgba(44, 120, 115, 0.4)'}}
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </motion.button>
+      </MotionButton>
 
       {/* Ventana de chat */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -124,7 +126,7 @@ const ChatWidget = () => {
             {/* Mensajes */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-800/50">
               {messages.map((message) => (
-                <motion.div
+                <MotionDiv
                   key={message.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -148,7 +150,7 @@ const ChatWidget = () => {
                       {message.time}
                     </p>
                   </div>
-                </motion.div>
+                </MotionDiv>
               ))}
 
               {/* Respuestas rápidas */}
@@ -220,7 +222,7 @@ const ChatWidget = () => {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
     </>

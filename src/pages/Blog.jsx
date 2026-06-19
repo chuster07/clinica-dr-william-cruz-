@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 
 const Blog = () => {
+  const MotionDiv = motion.div;
+  const MotionArticle = motion.article;
   const posts = [
     {
       id: 1,
@@ -35,7 +37,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
@@ -46,11 +48,11 @@ const Blog = () => {
           <p className="text-xl text-gray-600 dark:text-gray-400">
             Artículos y consejos de nuestros especialistas
           </p>
-        </motion.div>
+        </MotionDiv>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => (
-            <motion.article
+            <MotionArticle
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -86,7 +88,7 @@ const Blog = () => {
                 <span>Leer más</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
               </button>
-            </motion.article>
+            </MotionArticle>
           ))}
         </div>
       </div>

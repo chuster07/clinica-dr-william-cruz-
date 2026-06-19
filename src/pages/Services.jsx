@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Stethoscope, HeartPulse, Baby, Microscope, Eye, Bone, Brain, Pill } from 'lucide-react';
 
 const Services = () => {
+  const MotionDiv = motion.div;
   const services = [
     {
       icon: Stethoscope,
@@ -56,7 +57,7 @@ const Services = () => {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
@@ -67,11 +68,11 @@ const Services = () => {
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Ofrecemos atención médica integral con especialistas altamente capacitados y tecnología de vanguardia
           </p>
-        </motion.div>
+        </MotionDiv>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <motion.div
+            <MotionDiv
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +97,7 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </MotionDiv>
           ))}
         </div>
       </div>
