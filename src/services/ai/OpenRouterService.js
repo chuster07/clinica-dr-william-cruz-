@@ -7,6 +7,11 @@ const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const MODEL = import.meta.env.VITE_OPENROUTER_MODEL || 'meta-llama/llama-3.1-8b-instruct:free';
 
+// Verificación en tiempo de ejecución
+if (!API_KEY) {
+    console.warn('[OpenRouter] VITE_OPENROUTER_API_KEY no está definida en las variables de entorno.');
+}
+
 // System prompt: contexto completo de la clínica
 const SYSTEM_PROMPT = `Eres la recepcionista virtual de la Clínica Dr. William Cruz, ubicada en San José, Costa Rica (Av. Central, Calle 14). Tu nombre es "Valeria".
 
@@ -53,9 +58,8 @@ REGLAS IMPORTANTES:
  */
 export const sendMessage = async (messages) => {
     if (!API_KEY) {
-        throw new Error('API key no configurada. Verifica VITE_OPENROUTER_API_KEY en las variables de entorno.');
+        throw new Error('VITE_OPENROUTER_API_KEY no está configurada');
     }
-
     const response = await fetch(OPENROUTER_URL, {
         method: 'POST',
         headers: {
